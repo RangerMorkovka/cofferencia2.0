@@ -1,10 +1,10 @@
-import { useState } from 'react'
-
+import  { useState } from 'react'
+import "./App.css"
 
 
 
 function App() {
-  
+   
 
   return (
     <div>
@@ -22,11 +22,17 @@ function Header () {
   )
 }
 function Main () {
+  const [isOpen, setOpen] = useState(false);
+  const onClick = () => setOpen(!isOpen);
+
+
   return(
       <main className='main'>
         <MenuButton 
-            name="Кофейная карта"  />
-       <div className='sub-menu'>
+            name="Кофейная карта"
+            onClick ={onClick} 
+           />
+       <div className={`sub-menu${isOpen ? "-active" : ""}`}>
         <SubmenuButton
         name="Классика"
          />
@@ -86,12 +92,13 @@ const Footer = ()=>{
   )
 }
 
-function MenuButton (props) {
+const MenuButton =  (props, onClick) => {
+ 
   return(
   <li className='menu-item'>
-    <button className='menu-button'>{props.name}</button>
+    <button className='menu-button' onClick= {props.onClick} >{props.name}</button>
   </li>
-  )
+  );
 }
 const SubmenuButton = (props) => {
   return(
