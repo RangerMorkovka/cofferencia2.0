@@ -22,18 +22,21 @@ function Header () {
   )
 }
 function Main () {
-  const [isOpen, setOpen] = useState(false);
-  const onClick = () => setOpen(!isOpen);
-
+  const [isOpenCoffee, setOpenCoffee] = useState(false);
+  const [isOpenDrink, setOpenDrink] = useState(false);
+  const toggleCoffee = () => setOpenCoffee(!isOpenCoffee);
+  const toggleDrink = () => setOpenDrink(!isOpenDrink);
 
   return(
       <main className='main'>
+        <ul>
         <MenuButton 
             name="Кофейная карта"
-            onClick ={onClick} 
+            onClick ={toggleCoffee} 
            />
-       <div className={`sub-menu${isOpen ? "-active" : ""}`}>
-        <SubmenuButton
+       <div className={`sub-menu${isOpenCoffee ? "-active" : ""}`}>
+       <ul className='sub-menu-list'>
+        <SubmenuButton 
         name="Классика"
          />
          <SubmenuButton
@@ -42,10 +45,13 @@ function Main () {
          <SubmenuButton
         name="Сезонный"
          />
+         </ul>
        </div>
                <MenuButton 
-        name="Напитки"  />
-         <div className='sub-menu'>
+        name="Напитки"
+        onClick = {toggleDrink}  />
+         <div className={`sub-menu${isOpenDrink ? "-active" : ""}`}>
+          <ul className="sub-menu-list">
         <SubmenuButton
         name="Матча"
          />
@@ -58,6 +64,7 @@ function Main () {
          <SubmenuButton
         name="Холодные напитки"
          />
+         </ul>
        </div>
         <MenuButton 
         name="Завтраки"  />
@@ -73,6 +80,7 @@ function Main () {
         name="Десерты"  />
         <MenuButton 
         name="Дополнительно"  />
+        </ul>
       </main>
   )
 }

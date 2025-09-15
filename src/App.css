@@ -1,16 +1,28 @@
 
+:root{
+    interpolate-size: allow-keywords;
+}
 
-
-.sub-menu{
-    display: none;
+.sub-menu .sub-menu-list{
+    height: 0;
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
     
 
 }
 
+
 .sub-menu-item {
-    visibility: visible;
+   list-style: none; 
 }
-.sub-menu-active{
-    display: block;
+.sub-menu-active .sub-menu-list {
     height: auto;
+    transition: height 0.3s ease-in-out;
+  overflow: hidden;
+
+     
+    
+
+
 }
+
