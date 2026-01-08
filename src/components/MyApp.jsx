@@ -1,6 +1,7 @@
-import React, {  useState, useEffect, useRef, useCallback } from "react";
+import React, {  useState, useEffect, useRef, useCallback, createRef } from "react";
 import { Link } from "react-router-dom";
-import MenuButton from "./menuButton.jsx";
+
+import {MenuButton} from './menuButton.jsx';
 import { SubmenuButton } from "./subMenuButton.jsx";
 import { ProductCard } from "./productCard.jsx";
 import { menuData, submenuData, productsDataCoffee, productsDataDrinks, productsDataBF, productsDataSnacks, productsDataSoup, productsDataMaincourse, productsDataSalad, productsDataOthers } from "../data/data.jsx";
@@ -10,11 +11,13 @@ const MyApp = () => {
 };
 
 function Main() {
-  
-    
+
+   
     const [selectedItem, setSelectedItem] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState(1);
+ 
   
+
   
   const handleClick = (item) => {
     setSelectedItem(selectedItem === item.id ? item.id : item.id); //рендер кнопок подменю
@@ -24,38 +27,30 @@ function Main() {
     // рендер массива с продуктовыми карточками в зависимости от выбранной ссылки
   }
   
-    const refs = useRef(menuData.map(()=>React.createRef()));
-    
-    useEffect(()=>{
-      refs.current[0].current.focus();
-      //const element = refs.current
-      
-    },[]
-  );//фокус на активной кнопке
-     
-  
- 
+   
   return (
     <div className="wrapper">
       <header className="header">
-        <h1>Акции</h1>
+       
+      
       </header>
 
-      <nav className="menu">
-        <ul className="ul_menu" >
-          
-          {menuData.map((item, i) => (
+      <nav className="menu" >
+     
+      <ul className="ul_menu">
+        {menuData.map((item, i) => (
             <MenuButton
               key={item.id}
               menuDataObj={item}
-             ref={refs.current[i]}
-             
-             
+              
               onClick={() => [handleClick(item), toggleProducts(item)]}
               
             />
+            
+            
           ))}
-        </ul>
+         </ul>
+      
 
         {selectedItem === 1 && (
           <ul className="ul_sub-menu">

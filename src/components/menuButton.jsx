@@ -2,15 +2,14 @@ import React ,{useState, useRef, useEffect } from "react";
 import { menuData } from "../data/data";
 
 
-const MenuButton = ({menuDataObj, ref, onClick }) => {
-
+export const MenuButton = ({menuDataObj, onClick ,ref}) => {
 
 
 
   return (
-    <li className="menu-item" tabIndex={1}  >
-      <button className='menu-button'  onClick={onClick}
-     ref={ref}
+    <li className= "menu-item"  tabIndex={1}  >
+      <button className = 'menu-button' onClick={onClick}
+   
       >
         {menuDataObj.name}
         
@@ -18,4 +17,3 @@ const MenuButton = ({menuDataObj, ref, onClick }) => {
     </li>
   );
 };
-export default MenuButton;

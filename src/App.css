@@ -1,8 +1,4 @@
-@font-face {
-    font-family: "Open_Sans";
-    src: url(./public/Open_Sans/OpenSans-Light.ttf);
-    
-}
+
 :root {
   interpolate-size: allow-keywords;
   --header-height: calc(1vh + 100px);
@@ -18,10 +14,7 @@ html {
 
   min-height: 100dvh;
 }
-*:focus {
-  outline: none;
-  -webkit-background-color: #ededed;
-}
+
 body,
 html {
   position: relative;
@@ -30,8 +23,7 @@ html {
   display: flex;
   font-family:"Open_Sans";
   line-height: 1rem;
-  
-  
+  background-color: #ededed;
 }
 ::-webkit-scrollbar {
   width: 0;
@@ -41,18 +33,27 @@ a:visited {
 }
 section{
     padding: 0;
+  
+
 }
 .menu-button {
   border-radius: 15px;
   padding: 0 14px;
   border: none;
   min-height: 40px;
-  background-color: #fff;
-}
-.menu_button_focus:focus {
   background-color: #ededed;
+  
 }
 
+.menu-button:focus{
+  color:#ededed ;
+  background-color: rgb(80, 181, 187, 0.9);
+  box-shadow:     0px 0px 3px 0 #34bbb9;
+                 
+  
+       border-radius: 15px;             
+  
+}
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -63,11 +64,13 @@ section{
 }
 .header {
   display: flex;
-
+background-color: #50B5BB;
   height: var(--header-height);
   width: 100%;
   bottom: 0;
   top: 0;
+  background-image: url("./images/header/header.png");
+  background-repeat: repeat-x;
 }
 
 .img {
@@ -92,13 +95,15 @@ section{
   top: 0;
   width: 100%;
   z-index: 9999;
-  background-color: #fff;
+  background-color: #ededed;
+  
 }
 
 .menu-item,
 .sub-menu-item {
   white-space: nowrap;
-  scroll-snap-type: start;
+  scroll-snap-align: center;
+  
 }
 
 
@@ -109,17 +114,17 @@ ul {
 .ul_menu {
   width: 100%;
   display: flex;
+  justify-content: space-around;
+  gap: 2dvw;
   list-style: none;
   padding-left: 0;
+scroll-snap-type: x mandatory ;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   position: relative;
   left : 10px;
 
 }
-.ul_menu :focus {
-  background-color: #ededed;
-}
+
 .ul_sub-menu {
   width: 100%;
   display: flex;
@@ -155,6 +160,7 @@ padding: 1rem;
 font-style: medium ;
   line-height: 1rem;
  font-size:0.8rem;
+
 }
 
 @media (min-width: 1600px) {
@@ -183,7 +189,7 @@ font-style: medium ;
   display: flex;
   flex-direction: column;
   border-radius: 2vh;
-  
+  background-color: #fff;
   align-items: center;
   box-shadow: 0 0 #0000,
              0 0 #0000, 
@@ -195,6 +201,7 @@ font-style: medium ;
   display: flex;
   flex-direction: column;
   align-items: center;
+  
   
 }
 .product_props {
