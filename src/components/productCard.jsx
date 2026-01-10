@@ -14,17 +14,18 @@ export const ProductCard = ({productsDataObj}) => {
    <li className="li_products_card">
             <div className='product_card'>
                 <img className='img' src={productsDataObj.img} height={'150'} width={'150'} alt="" />
-               
-                    <h3>{productsDataObj.name}</h3>
-                   
+                    
+                    <p className="product_name">{productsDataObj.name}</p>
+                    <p className="ingredients">{productsDataObj.ingredients}</p>
             <div className="product_props">
 
-              <ul className="ul_product_props">{volumes.map((volume, index) => ( <li key= {index}>{volume}</li>))}
+              <ul className="volume">{volumes.map((volume, index) => ( <li key= {index}>{volume}</li>))}
                </ul>
-               <p>{productsDataObj.ingredients}</p>
-               <ul>{prices.map((price, index) => ( <li key= {index}>{price}</li>))}
+              
+               <ul className="price">{prices.map((price, index) => ( <li key= {index}>{price}</li>))}
                </ul>
             </div>
+            
           
 
                     </div>

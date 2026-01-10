@@ -177,10 +177,10 @@ function Main() {
         <div className="contacts">
           <h2>Контакты</h2>
           <div className="contact-items">
-            <a href="#">
+            <a href="https://www.instagram.com/cofferencia?igsh=MTZoemZuY3JjZHBxeQ==">
               <img
-                className="icon_img"
-                src="/icon-instagram48.png"
+                className="icon_img" height={'45px'} width={'45px'}
+                src="./icons/instagram.png"
                 alt="Инстаграм"
               />
             </a>
