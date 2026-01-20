@@ -37,7 +37,14 @@ function Main() {
 </div>
 
       </header>
-
+<div>
+  
+  <a href="https://yandex.ru/maps/-/CLdYnMpc"><img id='location' className='location_img' src="./icons/location.png" height={'20rem'} width={'20rem'} alt="локация" /></a>
+  <p className="location_text">Мы на карте</p>
+  
+    
+  
+</div>
       <nav className="menu" >
 
         <ul className="ul_menu">
@@ -184,6 +191,7 @@ function Main() {
                 alt="Инстаграм"
               />
             </a>
+            <p><a href="https://www.flaticon.com/free-icons/verified" title="verified icons">Verified icons created by Anggara - Flaticon</a></p>
           </div>
         </div>
       </footer>
