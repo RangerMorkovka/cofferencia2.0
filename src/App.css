@@ -136,7 +136,18 @@ letter-spacing: 0.4em;
   left: 0;
   right: 0;
 }
-
+.location_container{
+  position: relative;
+  top: 1rem;
+  left: 8rem;
+  
+}
+.location{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .menu {
   position: sticky;
   top: 0;
@@ -292,3 +303,4 @@ font-family: "Source Serif 4";
 
   width: 100%;
 }
+

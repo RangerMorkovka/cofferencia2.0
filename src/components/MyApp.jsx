@@ -37,10 +37,12 @@ function Main() {
 </div>
 
       </header>
-<div>
+<div className="location_container">
   
-  <a href="https://yandex.ru/maps/-/CLdYnMpc"><img id='location' className='location_img' src="./icons/location.png" height={'20rem'} width={'20rem'} alt="локация" /></a>
-  <p className="location_text">Мы на карте</p>
+  <a href="https://yandex.ru/maps/-/CLdYnMpc" className="location">
+  <img id='location' className='location_img' src="./icons/location.png" height={'20rem'} width={'20rem'} alt="локация" />
+  <p className="location_text">Мы на карте</p></a>
+  
   
     
   
