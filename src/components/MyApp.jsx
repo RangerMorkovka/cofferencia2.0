@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback, createRef } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import { MenuButton } from './menuButton.jsx';
 import { SubmenuButton } from "./subMenuButton.jsx";
 import { ProductCard } from "./productCard.jsx";
 import { menuData, submenuData, productsDataCoffee, productsDataDrinks, productsDataBF, productsDataSnacks, productsDataSoup, productsDataMaincourse, productsDataSalad, productsDataOthers } from "../data/data.jsx";
+import { Login } from "@mui/icons-material";
 
 const MyApp = () => {
   return <Main />;
 };
 
 function Main() {
+  const navigate = useNavigate();
+  const [showLoginButton, setShowLoginButton]= useState(null);
 
 
   const [selectedItem, setSelectedItem] = useState(1);
@@ -26,7 +29,20 @@ function Main() {
     setSelectedProducts(selectedProducts === item.id ? item.id : item.id);
     // рендер массива с продуктовыми карточками в зависимости от выбранной ссылки
   }
-
+useEffect(()=>{
+  //функция для проверки IP при загрузке страницы
+  const checkIP = async() => {
+    try {
+      const response = await fetch ('/api/check-access');
+      const data = await response.json();
+      setShowLoginButton(data.showLoginButton);
+    }
+    catch(error){
+      console.error ('Ошибка проверки IP', error);
+    }
+  };
+  checkIP();
+},[]);
 
   return (
     <div className="wrapper">
@@ -35,6 +51,10 @@ function Main() {
 <p className="cofferencia">Cofferencia</p>
 <p className="welcome">Добро пожаловать!</p>
 </div>
+{showLoginButton &&(
+  <button
+  onClick={() =>{navigate('/Login')}}>Вход</button>
+)}
 
       </header>
 <div className="location_container">
