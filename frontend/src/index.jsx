@@ -9,7 +9,7 @@ import App from './App.jsx'
 createRoot(document.getElementById('root')).render(
    <>
     
-      <BrowserRouter>
+      <BrowserRouter basename="/cofferencia2.0">
         <Provider store = {store}>
           <App />
         </Provider>

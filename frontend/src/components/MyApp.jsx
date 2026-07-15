@@ -5,22 +5,21 @@ import React, {
   useCallback,
   createRef,
 } from "react";
+import { instance } from "../Axios.jsx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Categories} from "./Categories/Categories.jsx";
+import { Categories } from "./Categories/Categories.jsx";
 import { SubmenuButton } from "./subMenuButton.jsx";
 import { ProductCard } from "./ProductCard/productCard.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProducts,
   fetchProductVariants,
-  
 } from "../redux/slices/products.js";
-import {fetchCategories} from '../redux/slices/categories.js';
+import { fetchCategories } from "../redux/slices/categories.js";
 
 import { Login } from "@mui/icons-material";
 import styles from "./ProductCard/productcard.module.css";
-
 
 const MyApp = () => {
   return <Main />;
@@ -29,13 +28,11 @@ const MyApp = () => {
 function Main() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const [showLoginButton, setShowLoginButton] = useState(false);
-  const [activeParentId , setActiveParentId] = useState(1);
-  const [activeSubCategoriesId, setActiveSubCategoriesId]= useState(null);
 
-  
-  
+  const [showLoginButton, setShowLoginButton] = useState(false);
+  const [activeParentId, setActiveParentId] = useState(1);
+  const [activeSubCategoriesId, setActiveSubCategoriesId] = useState(null);
+
   //const [selectedItem, setSelectedItem] = useState(1);
   //const [selectedProducts, setSelectedProducts] = useState(1);
 
@@ -50,7 +47,7 @@ function Main() {
     //функция для проверки IP при загрузке страницы
     const checkIP = async () => {
       try {
-        const response = await fetch("/api/check-access");
+        const response = await instance.get("/api/check-access");
         const data = await response.json();
         setShowLoginButton(data.showLoginButton);
       } catch (error) {
@@ -60,23 +57,36 @@ function Main() {
     checkIP();
   }, []);
 
- 
-  const { items: products, status:productsStatus } = useSelector((state) => state.products.products);
-  const {items : categories, status: categoriesStatus} = useSelector((state)=> state.categories.categories );
-  const {items : variant , status : variantsStatus} =useSelector((state) => state.products.variants );
-    const parentCategories = categories ? categories.filter(c => c.parent_id === null):[];
-  const subCategories = categories ? categories.filter (c => c.parent_id !== null && c.parent_id === activeParentId):[];
-const filteredProducts = products ? products.filter(product => {
-    if(activeSubCategoriesId) {
-      return product.category_id === activeSubCategoriesId;
-    }
-    if(activeParentId) {
-      if(subCategories.length > 0){
-      
-    return subCategories.some(sub => sub.id === product.category_id);
-    }
-    return product.category_id === activeParentId;}
-}):[];
+  const { items: products, status: productsStatus } = useSelector(
+    (state) => state.products.products,
+  );
+  const { items: categories, status: categoriesStatus } = useSelector(
+    (state) => state.categories.categories,
+  );
+  const { items: variant, status: variantsStatus } = useSelector(
+    (state) => state.products.variants,
+  );
+  const parentCategories = categories
+    ? categories.filter((c) => c.parent_id === null)
+    : [];
+  const subCategories = categories
+    ? categories.filter(
+        (c) => c.parent_id !== null && c.parent_id === activeParentId,
+      )
+    : [];
+  const filteredProducts = products
+    ? products.filter((product) => {
+        if (activeSubCategoriesId) {
+          return product.category_id === activeSubCategoriesId;
+        }
+        if (activeParentId) {
+          if (subCategories.length > 0) {
+            return subCategories.some((sub) => sub.id === product.category_id);
+          }
+          return product.category_id === activeParentId;
+        }
+      })
+    : [];
   // Делаем запрос к базе данных ОДИН раз при загрузке страницы, а не в каждой карточке
   useEffect(() => {
     dispatch(fetchCategories());
@@ -84,9 +94,9 @@ const filteredProducts = products ? products.filter(product => {
     dispatch(fetchProductVariants());
   }, [dispatch]);
 
-  useEffect(()=> {
+  useEffect(() => {
     setActiveSubCategoriesId(null);
-  },[activeParentId]);
+  }, [activeParentId]);
 
   if (productsStatus === "loading") {
     return <div>Загрузка товаров...</div>;
@@ -96,15 +106,12 @@ const filteredProducts = products ? products.filter(product => {
     return <div>Не удалось загрузить данные с сервера</div>;
   }
 
-  if(categoriesStatus === "loading"){
-    return <div>Загрузка категорий</div>
+  if (categoriesStatus === "loading") {
+    return <div>Загрузка категорий</div>;
   }
-  if(categoriesStatus === "error") {
+  if (categoriesStatus === "error") {
     return <div>Не удается загрузить категории</div>;
   }
-
- 
-
 
   return (
     <div className="wrapper">
@@ -136,55 +143,51 @@ const filteredProducts = products ? products.filter(product => {
           <p className="location_text">Мы на карте</p>
         </a>
       </div>
-        <nav className="menu" >
-
+      <nav className="menu">
         <ul className="ul_menu">
           {parentCategories.map((category) => (
             <Categories
               key={category.id}
-              name = {category.name}
-              isActive = {activeParentId === category.id}
+              name={category.name}
+              isActive={activeParentId === category.id}
               parent_id={category.parent_id}
               onClick={() => setActiveParentId(category.id)}
-
             />
-
-
           ))}
         </ul>
         <ul className="ul_sub-menu">
-          {subCategories.map((subCategory)=> (
+          {subCategories.map((subCategory) => (
             <Categories
-            key = {subCategory.id}
-            id = {subCategory.id}
-            name = {subCategory.name}
-            isActive = {activeSubCategoriesId === subCategory.id}
-            parent_id = {subCategory.parent_id}
-            onClick={() => setActiveSubCategoriesId(subCategory.id)}
+              key={subCategory.id}
+              id={subCategory.id}
+              name={subCategory.name}
+              isActive={activeSubCategoriesId === subCategory.id}
+              parent_id={subCategory.parent_id}
+              onClick={() => setActiveSubCategoriesId(subCategory.id)}
             />
-          ))
-          }
+          ))}
         </ul>
-        </nav>
+      </nav>
       <ul className={styles.products_list}>
         {filteredProducts.map((product) => {
-          const variants= Array.isArray(variant) ? variant.filter(v => v.product_id === product.id):[];
-         return (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            description={product.description}
-            price={product.price}
-            img_url={product.img_url}
-            is_available={product.is_available}
-            category_id = {product.category_id}
-            variant={variants}
-            // Передаем объект вариантов
-          />
-        ) }
-        )}
-        
+          const variants = Array.isArray(variant)
+            ? variant.filter((v) => v.product_id === product.id)
+            : [];
+          return (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              description={product.description}
+              price={product.price}
+              img_url={product.img_url}
+              is_available={product.is_available}
+              category_id={product.category_id}
+              variant={variants}
+              // Передаем объект вариантов
+            />
+          );
+        })}
       </ul>
       {/* <nav className="menu" >
 
