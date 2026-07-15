@@ -11,7 +11,7 @@ import { UserController } from "./controllers/index.js";
 import { ProductController } from "./controllers/index.js";
 import { CategoriesController } from "./controllers/index.js";
 import { ProductVariantsController } from "./controllers/index.js";
-
+import 'dotenv/config';
 const app = express();
 
 const port = process.env.port || 5174;
@@ -19,7 +19,12 @@ app.use(cors());
 app.use(express.json());
 app.set("trust proxy", true);
 
-const ALLOWED_IPS = ["178.178.214.22", "178.176.69.243"];
+
+
+const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST 
+  ? process.env.ALLOWED_IPS_LIST.split(',') 
+  : ["127.0.0.1", "::1"]; // Резервный локальный список на случай отсутствия файла
+
 
 app.get("/check-access", (req, res) => {
   const clientIP = req.ip || req.socket.remoteAddress;

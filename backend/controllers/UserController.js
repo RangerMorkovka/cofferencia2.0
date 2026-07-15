@@ -1,25 +1,27 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
-import {db} from '../config/db.js';
-
+import { db } from "../config/db.js";
 
 export const login = async (req, res) => {
   try {
-    const queryText = 'SELECT * FROM users WHERE username = $1;';
-    const result = await db.query(queryText, [req.body.username])
+    const queryText = "SELECT * FROM users WHERE username = $1;";
+    const result = await db.query(queryText, [req.body.username]);
     if (result.rows.length === 0) {
       return res.status(404).json({
-        message: 'Пользователь не найден',
+        message: "Пользователь не найден",
       });
     }
     const user = result.rows[0];
     console.log(user.password_hash);
-    const isValidPass = await bcrypt.compare(req.body.password, user.password_hash);
+    const isValidPass = await bcrypt.compare(
+      req.body.password,
+      user.password_hash,
+    );
 
     if (!isValidPass) {
       return res.status(400).json({
-        message: 'Неверный логин или пароль',
+        message: "Неверный логин или пароль",
       });
     }
 
@@ -27,9 +29,9 @@ export const login = async (req, res) => {
       {
         id: user.id,
       },
-      'secret123',
+      process.env.JWT_SECRET,
       {
-        expiresIn: '30d',
+        expiresIn: "30d",
       },
     );
 
@@ -42,28 +44,28 @@ export const login = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Не удалось авторизоваться',
+      message: "Не удалось авторизоваться",
     });
   }
 };
 
 export const getMe = async (req, res) => {
   try {
-    const queryText = 'SELECT id, username FROM users WHERE id = $1;';
-    const result = await db.query(queryText, [req.userId])
-    if (result.rows.length===0) {
+    const queryText = "SELECT id, username FROM users WHERE id = $1;";
+    const result = await db.query(queryText, [req.userId]);
+    if (result.rows.length === 0) {
       return res.status(404).json({
-        message: 'Пользователь не найден',
+        message: "Пользователь не найден",
       });
     }
-    const user= result.rows[0];
+    const user = result.rows[0];
     const { passwordHash, ...userData } = user;
 
     res.json(user);
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Нет доступа',
+      message: "Нет доступа",
     });
   }
 };
