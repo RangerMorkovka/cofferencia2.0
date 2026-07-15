@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          
+      - name: Install root and frontend dependencies
+        run: |
+          npm install
+          npm install --prefix frontend
+          
+      - name: Build frontend from root
+        run: npm run build
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Укажите папку, куда Vite складывает билд (обычно frontend/dist)
+          path: './frontend/dist' 
+          
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
