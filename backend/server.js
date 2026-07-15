@@ -19,11 +19,10 @@ app.use(cors());
 app.use(express.json());
 app.set("trust proxy", true);
 
-const ALLOWED_IPS = ["178.178.214.22", "178.176.69.243" ];
+const ALLOWED_IPS = ["178.178.214.22", "178.176.69.243"];
 
 app.get("/check-access", (req, res) => {
-  const clientIP =
-    req.headers["x-forwarded-for"] || req.ip || req.socket.remoteAddress;
+  const clientIP = req.ip || req.socket.remoteAddress;
   const isAllowed = ALLOWED_IPS.includes(clientIP);
   console.log(`[БЭКЕНД] Клиент: ${clientIP} | Доступ: ${isAllowed}`);
   res.json({ showLoginButton: isAllowed, debugIp: clientIP });
