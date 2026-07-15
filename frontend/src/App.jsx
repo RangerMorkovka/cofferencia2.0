@@ -11,8 +11,9 @@ function App() {
 
   return (
     <>
- <MyApp />
+ {/*<MyApp />*/}
  <Routes>
+    <Route path ="/" element={<MyApp/>}/>
     <Route path = "login" element = {<Login/>}/>
  </Routes>
  </>

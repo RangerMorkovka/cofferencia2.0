@@ -17,13 +17,12 @@ import { useNavigate } from "react-router-dom";
         register, handleSubmit, formState: {errors, isValid},
     } = useForm({
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
         },
         mode: "onChange",
 
     });
-
    
     const onSubmit = async (values) => {
         const data = await dispatch(fetchAuth(values));
@@ -40,24 +39,25 @@ import { useNavigate } from "react-router-dom";
     if(isAuth){
         return <Navigate to= "/" />
     };
+    
     return(
             <Paper classes= {{root: styles.root}}>
                 <Typography classes={{root: styles.title}} variant = 'h5'>
                     Вход в аккаунт
                 </Typography>
-                <form >
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                             className = {styles.field}
-                            lable= 'E-mail'
-                            type= "email"
-                           error= {Boolean(errors.email?.message)}
-                           helperText= {errors.email?.message}
-                            {...register("email", {required: 'Укажите почту'})}
+                            label= 'username'
+                            type= "text"
+                           error= {Boolean(errors.username?.message)}
+                           helperText= {errors.username?.message}
+                            {...register("username", {required: 'Введите логин'})}
                             fullWidth
                     />
                     <TextField 
                     className = {styles.field}
-                    lable= 'Пароль'
+                    label= 'Пароль'
                     type = 'password'
                     error = {Boolean(errors.password?.message)}
                     helperText = {errors.password?.message}

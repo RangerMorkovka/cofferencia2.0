@@ -9,10 +9,11 @@ export default defineConfig({
 server: {
   proxy:{
     '/api':{
-      target:'http://localhost:5174',
-      changeOrigin: false,
+      target:'http://192.168.1.200:5174',
+      changeOrigin: true,
         secure: false,
         xfwd: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
     }
   },
  

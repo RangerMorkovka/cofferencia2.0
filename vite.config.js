@@ -16,5 +16,6 @@ server: {
     }
   },
  
-}
+},
+base: '/cofferencia2.0/',
 })
