@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.set("trust proxy", true);
 
-const ALLOWED_IPS = ["178.176.69.197"];
+const ALLOWED_IPS = ["178.178.214.22", "178.176.69.243" ];
 
 app.get("/check-access", (req, res) => {
   const clientIP =
