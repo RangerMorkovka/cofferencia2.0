@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   pages: write
@@ -17,10 +20,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+          
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./frontend # Заходим в папку фронтенда
+        
+      - name: Build project
+        run: npm run build
+        working-directory: ./frontend # Запускаем сборку из папки фронтенда
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dist"
-      - uses: actions/deploy-pages@v4
+          path: './frontend/dist' # Указываем путь к собранной папке
+          
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
