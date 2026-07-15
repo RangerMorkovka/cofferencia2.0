@@ -21,13 +21,13 @@ jobs:
         with:
           node-version: 24
           
-      - name: Install dependencies
-        run: npm ci
-        working-directory: ./frontend # Заходим в папку фронтенда
-        
-      - name: Build project
+      - name: Install root and frontend dependencies
+        run: |
+          npm install
+          npm install --prefix frontend
+          
+      - name: Build frontend from root
         run: npm run build
-        working-directory: ./frontend # Запускаем сборку из папки фронтенда
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -35,7 +35,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Указываем путь к собранной папке
+          # Укажите папку, куда Vite складывает билд (обычно frontend/dist)
+          path: './frontend/dist' 
           
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
