@@ -28,7 +28,7 @@ const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
   ? process.env.ALLOWED_IPS_LIST.split(",")
   : ["127.0.0.1", "::1"]; // Резервный локальный список на случай отсутствия файла
 
-app.get("api/check-access", (req, res) => {
+app.get("/api/check-access", (req, res) => {
   const clientIP = req.ip || req.socket.remoteAddress;
   const isAllowed = ALLOWED_IPS.includes(clientIP);
   console.log(`[БЭКЕНД] Клиент: ${clientIP} | Доступ: ${isAllowed}`);
