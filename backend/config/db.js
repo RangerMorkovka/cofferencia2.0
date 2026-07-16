@@ -2,17 +2,17 @@ import { Pool } from 'pg';
 
 const pool = process.env.DATABASE_URL
   ? new Pool({
-      // Этот блок сработает ТОЛЬКО на сервере Render
+      
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false } 
     })
   : new Pool({
-      // Этот блок продолжит работать на вашем КОМПЬЮТЕРЕ (все ваши данные остаются без изменений)
-      user: 'postgres',
-      host: 'localhost',
-      database: 'cofferencia',
-      password: '123098qwe',
-      port: '5432',
+      
+      user: process.env.DB_USER,
+      host: process.env.DB_HOST,
+      database: process.env.DB_NAME,
+      password: process.env.DB_PASSWORD,
+      port: process.env.DB_PORT,
     });
 
 pool.query('SELECT NOW()', (err, res) => {

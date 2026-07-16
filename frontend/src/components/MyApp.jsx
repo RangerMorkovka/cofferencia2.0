@@ -47,9 +47,9 @@ function Main() {
     //функция для проверки IP при загрузке страницы
     const checkIP = async () => {
       try {
-        const response = await instance.get("/api/check-access");
-        const data = await response.json();
-        setShowLoginButton(data.showLoginButton);
+        const response = await instance.get("/check-access");
+
+        setShowLoginButton(response.data.showLoginButton);
       } catch (error) {
         console.error("Ошибка проверки IP", error);
       }
