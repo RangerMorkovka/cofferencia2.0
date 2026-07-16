@@ -3,7 +3,7 @@ import fs from "fs";
 import multer from "multer";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 import pg from "pg";
 import { db } from "./config/db.js";
 import { loginValidation } from "./validation.js";
@@ -22,12 +22,12 @@ app.set("trust proxy", true);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "dist")));
+
 const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
   ? process.env.ALLOWED_IPS_LIST.split(",")
   : ["127.0.0.1", "::1"]; // Резервный локальный список на случай отсутствия файла
 
-app.get("/check-access", (req, res) => {
+app.get("api/check-access", (req, res) => {
   const clientIP = req.ip || req.socket.remoteAddress;
   const isAllowed = ALLOWED_IPS.includes(clientIP);
   console.log(`[БЭКЕНД] Клиент: ${clientIP} | Доступ: ${isAllowed}`);
@@ -61,27 +61,35 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.use("/uploads/images", express.static("uploads/images"));
+app.use("api/uploads/images", express.static("uploads/images"));
 
 app.post(
-  "/auth/login",
+  "api/auth/login",
   loginValidation,
   handleValidationErrors,
   UserController.login,
 );
 //app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
-app.get("/auth/me", checkAuth, UserController.getMe);
+app.get("api/auth/me", checkAuth, UserController.getMe);
 
-app.post("/uploads/images", checkAuth, upload.single("image"), (req, res) => {
-  res.json({
-    url: `/uploads/images/${req.file.originalname}`,
-  });
-});
+app.post(
+  "api/uploads/images",
+  checkAuth,
+  upload.single("image"),
+  (req, res) => {
+    res.json({
+      url: `/uploads/images/${req.file.originalname}`,
+    });
+  },
+);
 
-app.get("/categories", CategoriesController.getAllCategories);
+app.get("api/categories", CategoriesController.getAllCategories);
 
-app.get("/products", ProductController.getAllProducts);
-app.get("/product_variants", ProductVariantsController.getAllProductVariants);
+app.get("api/products", ProductController.getAllProducts);
+app.get(
+  "api/product_variants",
+  ProductVariantsController.getAllProductVariants,
+);
 //app.get('/posts/tags', PostController.getLastTags);
 //app.get('/posts/:id', PostController.getOne);
 //app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
@@ -93,7 +101,7 @@ app.get("/product_variants", ProductVariantsController.getAllProductVariants);
   handleValidationErrors,
   PostController.update
 );*/
-
+app.use(express.static(path.join(__dirname, "dist")));
 app.listen(5174, "0.0.0.0", (err) => {
   if (err) {
     return console.log(err);
