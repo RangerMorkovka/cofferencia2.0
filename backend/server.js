@@ -102,7 +102,7 @@ app.get(
   handleValidationErrors,
   PostController.update
 );*/
-app.get("*/path", (req, res) => {
+app.get("/*path", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 app.listen(5174, "0.0.0.0", (err) => {
