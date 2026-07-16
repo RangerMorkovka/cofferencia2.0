@@ -2,7 +2,7 @@ import express from "express";
 import fs from "fs";
 import multer from "multer";
 import cors from "cors";
-
+import path from "path";
 import pg from "pg";
 import { db } from "./config/db.js";
 import { loginValidation } from "./validation.js";
@@ -11,7 +11,7 @@ import { UserController } from "./controllers/index.js";
 import { ProductController } from "./controllers/index.js";
 import { CategoriesController } from "./controllers/index.js";
 import { ProductVariantsController } from "./controllers/index.js";
-import 'dotenv/config';
+import "dotenv/config";
 const app = express();
 
 const port = process.env.port || 5174;
@@ -19,12 +19,12 @@ app.use(cors());
 app.use(express.json());
 app.set("trust proxy", true);
 
-
-
-const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST 
-  ? process.env.ALLOWED_IPS_LIST.split(',') 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, "dist")));
+const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
+  ? process.env.ALLOWED_IPS_LIST.split(",")
   : ["127.0.0.1", "::1"]; // Резервный локальный список на случай отсутствия файла
-
 
 app.get("/check-access", (req, res) => {
   const clientIP = req.ip || req.socket.remoteAddress;
