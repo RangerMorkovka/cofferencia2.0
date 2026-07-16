@@ -62,19 +62,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.use("api/uploads/images", express.static("uploads/images"));
+app.use("/api/uploads/images", express.static("uploads/images"));
 
 app.post(
-  "api/auth/login",
+  "/api/auth/login",
   loginValidation,
   handleValidationErrors,
   UserController.login,
 );
 //app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
-app.get("api/auth/me", checkAuth, UserController.getMe);
+app.get("/api/auth/me", checkAuth, UserController.getMe);
 
 app.post(
-  "api/uploads/images",
+  "/api/uploads/images",
   checkAuth,
   upload.single("image"),
   (req, res) => {
@@ -84,11 +84,11 @@ app.post(
   },
 );
 
-app.get("api/categories", CategoriesController.getAllCategories);
+app.get("/api/categories", CategoriesController.getAllCategories);
 
-app.get("api/products", ProductController.getAllProducts);
+app.get("/api/products", ProductController.getAllProducts);
 app.get(
-  "api/product_variants",
+  "/api/product_variants",
   ProductVariantsController.getAllProductVariants,
 );
 //app.get('/posts/tags', PostController.getLastTags);
