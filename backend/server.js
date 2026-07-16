@@ -14,7 +14,7 @@ import { CategoriesController } from "./controllers/index.js";
 import { ProductVariantsController } from "./controllers/index.js";
 import "dotenv/config";
 const app = express();
-
+app.use(express.static(path.join(__dirname, 'dist')));
 const port = process.env.port || 5174;
 app.use(cors());
 app.use(express.json());
@@ -101,7 +101,9 @@ app.get(
   handleValidationErrors,
   PostController.update
 );*/
-app.use(express.static(path.join(__dirname, "dist")));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 app.listen(5174, "0.0.0.0", (err) => {
   if (err) {
     return console.log(err);
