@@ -14,7 +14,7 @@ import { CategoriesController } from "./controllers/index.js";
 import { ProductVariantsController } from "./controllers/index.js";
 import "dotenv/config";
 const app = express();
-app.use(express.static(path.join(__dirname, 'dist')));
+
 const port = process.env.port || 5174;
 app.use(cors());
 app.use(express.json());
@@ -22,6 +22,7 @@ app.set("trust proxy", true);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, 'dist')));
 
 const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
   ? process.env.ALLOWED_IPS_LIST.split(",")
