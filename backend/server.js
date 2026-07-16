@@ -22,7 +22,7 @@ app.set("trust proxy", true);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, "dist")));
 
 const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
   ? process.env.ALLOWED_IPS_LIST.split(",")
@@ -102,8 +102,8 @@ app.get(
   handleValidationErrors,
   PostController.update
 );*/
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+app.get("*/path", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 app.listen(5174, "0.0.0.0", (err) => {
   if (err) {
