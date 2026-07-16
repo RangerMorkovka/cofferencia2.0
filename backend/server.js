@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
   ? process.env.ALLOWED_IPS_LIST.split(",")
   : ["127.0.0.1", "::1"]; // Резервный локальный список на случай отсутствия файла
-
+console.log(`[БЭКЕНД] Разрешенные IP-адреса: ${ALLOWED_IPS.join(", ")}`);
 app.get("/api/check-access", (req, res) => {
   const clientIP = req.ip || req.socket.remoteAddress;
   const isAllowed = ALLOWED_IPS.includes(clientIP);
