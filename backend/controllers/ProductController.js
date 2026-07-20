@@ -2,7 +2,8 @@ import {db} from '../config/db.js'
 
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await db.query('SELECT * FROM products');
+    const products = await db.query(`SELECT * FROM products
+                                    ORDER BY id ASC;`);
         res.json(products.rows);
     
   } catch (err) {

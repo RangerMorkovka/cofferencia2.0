@@ -50,10 +50,10 @@ async function findUserByUserName(username) {
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
-    if (!fs.existsSync("uploads")) {
-      fs.mkdirSync("uploads");
+    if (!fs.existsSync("uploads/images")) {
+      fs.mkdirSync("uploads/images");
     }
-    cb(null, "uploads");
+    cb(null, "uploads/images");
   },
   filename: (_, file, cb) => {
     cb(null, file.originalname);
@@ -79,7 +79,7 @@ app.post(
   upload.single("image"),
   (req, res) => {
     res.json({
-      url: `/uploads/images/${req.file.originalname}`,
+      img_url: `/uploads/images/${req.file.originalname}`,
     });
   },
 );

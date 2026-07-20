@@ -1,12 +1,12 @@
 import { Pool } from 'pg';
 
-const pool = process.env.DATABASE_URL
+const pool = /*process.env.DATABASE_URL
   ? new Pool({
       // Этот блок сработает ТОЛЬКО на сервере Render
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false } 
     })
-  : new Pool({
+  : */new Pool({
       // Этот блок продолжит работать на вашем КОМПЬЮТЕРЕ (все ваши данные остаются без изменений)
       user: 'postgres',
       host: 'localhost',
@@ -14,6 +14,7 @@ const pool = process.env.DATABASE_URL
       password: '123098qwe',
       port: '5432',
     });
+    console.log (process.env.DATABASE_URL);
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
