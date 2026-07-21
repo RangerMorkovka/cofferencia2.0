@@ -42,7 +42,7 @@ import { useNavigate } from "react-router-dom";
         <Navigate to= "/Admin" />
          
         )
-    };
+    }
         
         
     

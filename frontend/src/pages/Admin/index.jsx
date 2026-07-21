@@ -15,7 +15,7 @@ import styles from './admin.module.css';
 import { useNavigate } from "react-router-dom";
 import instance from "../../Axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchProducts } from "../../redux/slices/products";
+import { fetchProducts, fetchProductVariants } from "../../redux/slices/products";
 import { fetchCategories } from "../../redux/slices/categories";
 import { fetchAuthMe, selectIsAuth } from "../../redux/slices/auth";
 
@@ -29,27 +29,32 @@ export const Admin = () => {
   const { items: categories, status: categoriesStatus } = useSelector(
     (state) => state.categories.categories,
   );
-  const variants = useSelector((state) => state.products.variants?.items || []);
+  const { items: variants, status: variantsStatus } = useSelector(
+      (state) => state.products.variants,
+    );
 
-  const [isLoading, setIsLoading] = useState(false);
+  
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-    dispatch(fetchCategories());
-  }, [dispatch]);
+ 
 
 useEffect(() => {
     const token = window.localStorage.getItem('token');
-    if(token){
-        dispatch(fetchAuthMe());
-        dispatch(fetchProducts());
-        dispatch(fetchCategories());
-    }else {
- navigate('/');
+    if(!token){
+      navigate('/');
+      return;
     }
-},[dispatch,navigate]);
 
-    
+        dispatch(fetchAuthMe());
+        dispatch(fetchCategories());
+        dispatch(fetchProducts());
+        dispatch(fetchProductVariants());
+       
+        
+   
+},[dispatch]);
+
+
+     
   
   
   if (productsStatus === "loading") {
@@ -76,12 +81,12 @@ useEffect(() => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Категория</TableCell>
-              <TableCell>Имя</TableCell>
+              <TableCell >Имя</TableCell>
               <TableCell>Описание</TableCell>
-              <TableCell>Изображение</TableCell>
+              <TableCell >Изображение</TableCell>
               <TableCell>Доступность</TableCell>
-              <TableCell>Объем</TableCell>
-              <TableCell>Цена</TableCell>
+              <TableCell sx={{minWidth:'80px'}}>Объем</TableCell>
+              <TableCell sx={{minWidth:'80px'}}>Цена</TableCell>
               <TableCell> </TableCell>
               <TableCell> </TableCell>
             </TableRow>
@@ -92,6 +97,7 @@ useEffect(() => {
                 const productVariants = Array.isArray(variants)
                   ? variants.filter((v) => v.product_id === product.id)
                   : [];
+                  
                 const currentCategory = Array.isArray(categories)
                   ? categories.find((cat) => cat.id === product.category_id)
                   : null;

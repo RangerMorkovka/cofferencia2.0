@@ -14,7 +14,7 @@ const pool = /*process.env.DATABASE_URL
       password: '123098qwe',
       port: '5432',
     });
-    console.log (process.env.DATABASE_URL);
+    
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {

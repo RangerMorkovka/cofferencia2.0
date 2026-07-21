@@ -93,7 +93,7 @@ app.get(
 );
 //app.get('/posts/tags', PostController.getLastTags);
 //app.get('/posts/:id', PostController.getOne);
-//app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
+app.post('/api/products', ProductController.create);
 //app.delete('/posts/:id', checkAuth, PostController.remove);
 /*app.patch(
   '/posts/:id',

@@ -40,7 +40,7 @@ export const ProductCard = ({
           {variantsArray.length > 0 && (
             <ul className={styles.volume}>
               {variantsArray.map((v) => (
-                <li key={v.id}>{v.volume}</li>
+                <li key={v.id}>{v.volume} мл</li>
               ))}
             </ul>
           )}
