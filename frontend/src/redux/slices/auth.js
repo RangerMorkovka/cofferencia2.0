@@ -3,12 +3,12 @@ import axios from '../../Axios.jsx';
 
 
 export const fetchAuth = createAsyncThunk('/auth/fetchAuth', async (params) => {
-    const {data} = await axios.post ('/auth/login', params);
+    const {data} = await axios.post ('api/auth/login', params);
     return data
 });
 
 export const fetchAuthMe = createAsyncThunk('/auth/fetchAuthMe', async() => {
-    const {data} = await axios.get ('/auth/me');
+    const {data} = await axios.get ('api/auth/me');
     return data
 });
 

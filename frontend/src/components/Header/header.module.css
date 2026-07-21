@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  justify-content: center;
+  
+background-color: #50B5BB;
+  height: var(--header-height);
+  min-height: fit-content;
+  width: 100%;
+  bottom: 0;
+  top: 0;
+   
+  background-image: url("./images/header/header.png");
+  background-repeat: repeat-x;
+  border-bottom: 3px inset #1f7c83;
+}
+.header_text{
+  display: flex;
+  flex-direction: column;
+  
+ align-items: center;
+  
+  font-family:"Source Serif 4";
+  font-size: 0.9em;
+  line-height: 1em;
+   
+  
+}
+.cofferencia{
+display: block;
+ max-height: fit-content; 
+font-family: "Tangerine";
+font-size: 2.5em;
+letter-spacing: 0.4em;
+
+}

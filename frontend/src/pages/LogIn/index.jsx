@@ -37,8 +37,15 @@ import { useNavigate } from "react-router-dom";
         }
     };
     if(isAuth){
-        return <Navigate to= "/" />
-    };
+        return (
+            
+        <Navigate to= "/Admin" />
+         
+        )
+    }
+        
+        
+    
     
     return(
             <Paper classes= {{root: styles.root}}>

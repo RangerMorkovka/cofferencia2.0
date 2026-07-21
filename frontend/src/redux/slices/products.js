@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../Axios";
-import { ProductCard } from "../../components/ProductCard/productCard";
+//import { ProductCard } from "../../components/ProductCard/productCard";
 
 export const fetchProducts = createAsyncThunk(
   "/products/fetchProducts",
   async () => {
-    const { data } = await axios.get("/products");
+    const { data } = await axios.get("api/products");
     return data;
   },
 );
@@ -13,7 +13,7 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductVariants = createAsyncThunk(
   "/product_variants/fetchProductVariants",
   async () => {
-    const { data } = await axios.get("/product_variants");
+    const { data } = await axios.get("api/product_variants");
     return data;
   },
 );

@@ -1,0 +1,65 @@
+.addButton{
+    box-sizing: border-box;
+  /* Позиционирование и размеры */
+  display: block;
+  position: relative;
+  top:1.5rem;
+  left:75vw;
+  padding: 5px;
+  min-width: 8rem;
+  height: 3rem;
+  /*margin: 15px 0;*/
+  
+  /* Хак для адаптивности под мобилки (занимает всю ширину на малых экранах) */
+  
+
+  /* Оформление фона и границ */
+  background-color: rgb(80, 181, 187, 0.9); /* Красивый кофейный/шоколадный цвет */
+  color: #010d10; /* Белый текст */
+  border: 1px solid #469cae;
+  border-radius: 1rem; /* Скругление углов */
+  
+  /* Шрифт */
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  
+  /* Интерактивность */
+  cursor: pointer;
+  box-shadow: 0 4px 6px 4px rgba(0, 0, 0, 0.1);
+  
+  
+}
+
+/* Эффект при наведении курсора */
+.addButton:hover {
+  background-color: #14cecb; /* Немного светлее при наведении */
+  color:#010d10 ;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Эффект при клике (нажатии) */
+.addButton:active {
+ 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили на случай, если кнопка заблокирована (disabled) */
+
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 600px) {
+  .addButton {
+    height: 2rem;
+    min-width:4rem; /* На мобильных кнопка растянется во всю ширину */
+    padding: 2px;
+    font-size: 10px;
+    right: 5rem;
+    top: 6rem;
+     border: 1px solid #469cae;
+     border-radius: 0.4rem;
+    
+  }
+}
+

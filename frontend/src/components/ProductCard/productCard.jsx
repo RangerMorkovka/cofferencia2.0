@@ -13,38 +13,39 @@ export const ProductCard = ({
   
   const variantsArray = Array.isArray(variant) ? variant : [];
   return (
-    <li className="li_products_card">
-      <div className="product_card">
+    <li className={styles.li_products_card}>
+      <div className={styles.product_card}>
         {/* Картинка товара */}
         {img_url && (
           <img
-            className="img"
+            className={styles.img}
+           // src={img_url.startsWith('http') ? img_url : `http://localhost:5174/api${img_url}`}
             src={img_url.startsWith('http') ? img_url : `/api${img_url}`}
             height="150"
             width="150"
             alt={name}
           />
         )}
-
-        {/* Ссылка на детальную страницу товара по ID */}
-        <Link to={`/products/${id}`} className="product_name_link">
-          <p className="product_name">{name}</p>
-        </Link>
+          
+        
+        
+          <p className={styles.product_name}>{name}</p>
+        
 
         {/* Описание (ингредиенты) */}
-        <p className="ingredients">{description}</p>
+        <p className={styles.ingredients}>{description}</p>
 
         {/* Характеристики (объем и цена) */}
-        <div className="product_props">
+        <div className={styles.product_props}>
           {variantsArray.length > 0 && (
-            <ul className="volume">
+            <ul className={styles.volume}>
               {variantsArray.map((v) => (
-                <li key={v.id}>{v.volume}</li>
+                <li key={v.id}>{v.volume} мл</li>
               ))}
             </ul>
           )}
 
-          <ul className="price">
+          <ul className={styles.price}>
             {variantsArray.map((v) => (
               <li key={v.id}>{v.price} руб.</li>
             ))}

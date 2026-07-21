@@ -1,0 +1,28 @@
+
+
+.tableContainer {
+  padding: 20px;
+  width: auto;
+  margin: 20px;
+  box-sizing: border-box;
+}
+
+
+@media (max-width: 768px) {
+  .tableContainer {
+    margin: 10px; /* Уменьшаем отступы на мобилке */
+    padding: 5px;
+    background: none !important; /* Убираем общую белую подложку Paper */
+    box-shadow: none !important;
+  }
+
+  /* Скрываем шапку таблицы на смартфонах */
+  .tableHead {
+    display: none !important;
+  }
+  
+  .tableElement {
+    display: block !important;
+    width: 100% !important;
+  }
+}

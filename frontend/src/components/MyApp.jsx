@@ -5,12 +5,13 @@ import React, {
   useCallback,
   createRef,
 } from "react";
+import styles from "../App.module.css";
 import { instance } from "../Axios.jsx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Categories } from "./Categories/Categories.jsx";
-import { SubmenuButton } from "./subMenuButton.jsx";
-import { ProductCard } from "./ProductCard/productCard.jsx";
+import { AddProduct } from "../pages/AddProduct/index.jsx";
+import { Header, Categories, Location, ProductCard } from "./index.jsx";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProducts,
@@ -19,7 +20,7 @@ import {
 import { fetchCategories } from "../redux/slices/categories.js";
 
 import { Login } from "@mui/icons-material";
-import styles from "./ProductCard/productcard.module.css";
+import { fetchAuthMe } from "../redux/slices/auth.js";
 
 const MyApp = () => {
   return <Main />;
@@ -30,32 +31,9 @@ function Main() {
   const navigate = useNavigate();
 
   const [showLoginButton, setShowLoginButton] = useState(false);
+  // const [showAddButton, setShowAddButton] = useState(false);
   const [activeParentId, setActiveParentId] = useState(1);
   const [activeSubCategoriesId, setActiveSubCategoriesId] = useState(null);
-
-  //const [selectedItem, setSelectedItem] = useState(1);
-  //const [selectedProducts, setSelectedProducts] = useState(1);
-
-  const handleClick = (item) => {
-    setSelectedItem(selectedItem === item.id ? item.id : item.id); //рендер кнопок подменю
-  };
-  const toggleProducts = (item) => {
-    setSelectedProducts(selectedProducts === item.id ? item.id : item.id);
-    // рендер массива с продуктовыми карточками в зависимости от выбранной ссылки
-  };
-  useEffect(() => {
-    //функция для проверки IP при загрузке страницы
-    const checkIP = async () => {
-      try {
-        const response = await instance.get("/check-access");
-
-        setShowLoginButton(response.data.showLoginButton);
-      } catch (error) {
-        console.error("Ошибка проверки IP", error);
-      }
-    };
-    checkIP();
-  }, []);
 
   const { items: products, status: productsStatus } = useSelector(
     (state) => state.products.products,
@@ -87,6 +65,20 @@ function Main() {
         }
       })
     : [];
+  useEffect(() => {
+    //функция для проверки IP при загрузке страницы
+    const checkIP = async () => {
+      try {
+        const response = await instance.get("api/check-access");
+        const data = response.data;
+        setShowLoginButton(data.showLoginButton);
+      } catch (error) {
+        console.error("Ошибка проверки IP", error);
+      }
+    };
+    checkIP();
+  }, []);
+
   // Делаем запрос к базе данных ОДИН раз при загрузке страницы, а не в каждой карточке
   useEffect(() => {
     dispatch(fetchCategories());
@@ -114,37 +106,12 @@ function Main() {
   }
 
   return (
-    <div className="wrapper">
-      <header className="header">
-        <div className="header_text">
-          <p className="cofferencia">Cofferencia</p>
-          <p className="welcome">Добро пожаловать!</p>
-        </div>
-        {showLoginButton && (
-          <button
-            onClick={() => {
-              navigate("/Login");
-            }}
-          >
-            Вход
-          </button>
-        )}
-      </header>
-      <div className="location_container">
-        <a href="https://yandex.ru/maps/-/CLdYnMpc" className="location">
-          <img
-            id="location"
-            className="location_img"
-            src="./icons/location.png"
-            height={"20rem"}
-            width={"20rem"}
-            alt="локация"
-          />
-          <p className="location_text">Мы на карте</p>
-        </a>
-      </div>
-      <nav className="menu">
-        <ul className="ul_menu">
+    <div className={styles.wrapper}>
+      <Header showLoginButton={showLoginButton} />
+
+      <Location />
+      <nav className={styles.menu}>
+        <ul className={styles.ul_menu}>
           {parentCategories.map((category) => (
             <Categories
               key={category.id}
@@ -155,7 +122,7 @@ function Main() {
             />
           ))}
         </ul>
-        <ul className="ul_sub-menu">
+        <ul className={styles.ul_sub_menu}>
           {subCategories.map((subCategory) => (
             <Categories
               key={subCategory.id}
@@ -168,7 +135,7 @@ function Main() {
           ))}
         </ul>
       </nav>
-      <ul className={styles.products_list}>
+      <ul className={styles.ul_products_card}>
         {filteredProducts.map((product) => {
           const variants = Array.isArray(variant)
             ? variant.filter((v) => v.product_id === product.id)
