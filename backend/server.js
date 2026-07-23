@@ -91,17 +91,20 @@ app.get(
   "/api/product_variants",
   ProductVariantsController.getAllProductVariants,
 );
+app.get("/api/product_variants/:id", ProductVariantsController.getOne);
 //app.get('/posts/tags', PostController.getLastTags);
-//app.get('/posts/:id', PostController.getOne);
-app.post('/api/products', ProductController.create);
-//app.delete('/posts/:id', checkAuth, PostController.remove);
-/*app.patch(
-  '/posts/:id',
-  checkAuth,
-  postCreateValidation,
-  handleValidationErrors,
-  PostController.update
-);*/
+app.get("/api/products/:id", ProductController.getOne);
+app.post("/api/products", ProductController.create);
+app.delete("/api/products/:id", checkAuth, ProductController.remove);
+app.patch(
+  "/api/products/:id",
+
+  //checkAuth,
+  //postCreateValidation,
+  /// handleValidationErrors,
+  ProductController.update,
+);
+app.patch("/api/product_variants/:id", ProductController.update);
 app.get("/*path", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });

@@ -21,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path = "/AddProduct" element = {<AddProduct />} />
         <Route path = "/admin" element = {<Admin />} />
+         <Route path = "/addproduct/:id" element = {<AddProduct />} />
       </Routes>
     </>
   );

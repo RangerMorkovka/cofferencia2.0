@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../../Axios";
+import axios, { instance } from "../../Axios";
 //import { ProductCard } from "../../components/ProductCard/productCard";
 
 export const fetchProducts = createAsyncThunk(
@@ -17,11 +17,15 @@ export const fetchProductVariants = createAsyncThunk(
     return data;
   },
 );
-/*export const fetchRemovePost = createAsyncThunk('/posts/fetchRemovePost', async (id) => {
-    const {data} = await axios.delete(`/posts/${id}`);
+export const fetchEditProduct = createAsyncThunk('api/products/fetchEditProduct', async (id) => {
+    const {data} = await instance.get(`api/products/${id}`);
+    
     return data;
-});*/
-
+});
+export const fetchRemoveProducts = createAsyncThunk('/products/fetchRemoveProducts', async (id) => {
+    const {data} = await instance.delete(`api/products/${id}`);
+    return data;
+});
 const initialState = {
   products: {
     items: [],
@@ -31,6 +35,10 @@ const initialState = {
     items: [],
     status: "loading",
   },
+  edits: {
+    items: [],
+    status: "loading",
+  }
 };
 
 const productsSlice = createSlice({
@@ -63,9 +71,22 @@ const productsSlice = createSlice({
       state.variants.items = [];
       state.variants.status = "error";
     },
-    /* [fetchRemovePost.pending]: (state, action) => {
-            state.posts.items = state.posts.items.filter((obj) => obj._id !== action.meta.arg)
-        },*/
+     [fetchEditProduct.rejected]: (state) => {
+      state.edits.items = [];
+      state.edits.status = "error";
+    },
+
+    [fetchEditProduct.pending]: (state) => {
+      state.edits.items = [];
+      state.edits.status = "loading";
+    },
+    [fetchEditProduct.fulfilled]: (state, action) => {
+      state.edits.items = action.payload;
+      state.edits.status = "loaded";
+    },
+     [fetchRemoveProducts.pending]: (state, action) => {
+            state.products.items = state.products.items.filter((obj) => obj.id !== action.meta.arg)
+        },
   },
 });
 

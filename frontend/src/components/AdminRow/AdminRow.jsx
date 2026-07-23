@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -8,9 +8,12 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-
+import { fetchRemoveProducts } from "../../redux/slices/products";
 import styles from "./adminrow.module.css"
-
+import { Update } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {AddProduct} from "../../pages/AddProduct/index"
 export const AdminRow = ({
      id,
   name,
@@ -21,6 +24,20 @@ export const AdminRow = ({
   variant = [],
 }) => {
   const variantsArray = Array.isArray(variant)? variant : [];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onClickRemove = () => {
+    if(window.confirm("Вы действительно хотите удалить?")){
+    dispatch(fetchRemoveProducts(id));
+  }};
+  
+const editForm = () => {
+    navigate(`/addproduct/${id}`);
+    
+  }
+  
+  
+  
     return (
       <TableRow className={styles.mobileRow}>
         <TableCell className={styles.mobileCell}>{id}</TableCell>
@@ -57,8 +74,11 @@ export const AdminRow = ({
           </TableCell>
       
         
-        <TableCell>Редактировать</TableCell>
-        <TableCell>Удалить</TableCell>
+        <TableCell>
+          <button onClick ={()=>editForm(id)}>Редактировать</button>
+        </TableCell>
+        <TableCell>
+          <button onClick={onClickRemove}>Удалить</button></TableCell>
       </TableRow>
     )
 }
