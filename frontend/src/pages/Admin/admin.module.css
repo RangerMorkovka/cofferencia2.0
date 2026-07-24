@@ -5,8 +5,15 @@
   width: auto;
   margin: 20px;
   box-sizing: border-box;
+  overflow-x: visible !important;
 }
+.tableHead{
 
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #ffff;
+}
 
 @media (max-width: 768px) {
   .tableContainer {

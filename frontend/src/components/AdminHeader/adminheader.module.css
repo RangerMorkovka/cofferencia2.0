@@ -1,25 +1,24 @@
-.addButton{
-    box-sizing: border-box;
-  /* Позиционирование и размеры */
-  display: block;
-  position: relative;
-  top:1.5rem;
-  left:75vw;
-  padding: 5px;
-  min-width: 8rem;
-  height: 3rem;
-  /*margin: 15px 0;*/
-  
-  /* Хак для адаптивности под мобилки (занимает всю ширину на малых экранах) */
-  
+.container{
 
-  /* Оформление фона и границ */
-  background-color: rgb(80, 181, 187, 0.9); /* Красивый кофейный/шоколадный цвет */
-  color: #010d10; /* Белый текст */
-  border: 1px solid #469cae;
-  border-radius: 1rem; /* Скругление углов */
+  padding: 1rem;
+}
+
+
+
+.btnContainer{
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  padding: 1rem;
+  gap: 20px;
   
-  /* Шрифт */
+}
+
+
+
+
+.addBtn{
+      
   font-family: inherit;
   font-size: 14px;
   font-weight: 400;
@@ -31,7 +30,9 @@
   
   
 }
-
+.logoutBtn {
+  background-color: rgb(241, 200, 200);
+}
 /* Эффект при наведении курсора */
 .addButton:hover {
   background-color: #14cecb; /* Немного светлее при наведении */

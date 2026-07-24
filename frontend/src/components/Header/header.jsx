@@ -13,6 +13,7 @@ export const Header = ({ showLoginButton }) => {
       </div>
       {showLoginButton && (
         <button
+          className={`button ${styles.button_action_login}`}
           onClick={() => {
             navigate("/Login");
           }}
@@ -20,8 +21,6 @@ export const Header = ({ showLoginButton }) => {
           Вход
         </button>
       )}
-
-     
     </header>
   );
 };

@@ -16,19 +16,21 @@ export const AdminHeader = () => {
                 <header className={styles.header}>
                     <h1 className={styles.h1}>Cofferencia</h1>
                     <p className={styles.p}>Добро пожаловать в админ-панель!</p>
-
-        <button 
-        className={styles.addButton}
+            <div className={styles.btnContainer}> 
+                <button 
+        className={styles.addBtn}
         onClick ={ ()=> {
             navigate ("/AddProduct")
         }}
           >Добавить<br/>блюдо</button>
            <button 
-        className={styles.logoutButton}
+        className={styles.logoutBtn}
         onClick ={ ()=> {
             navigate ("/")
         }}
           >Выход</button>
+          </div>
+       
 
           </header>
           </div>

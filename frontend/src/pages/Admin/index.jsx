@@ -75,8 +75,9 @@ useEffect(() => {
       <TableContainer
         component={Paper}
         className={styles.tableContainer}
+        
       >
-        <Table size="small">
+        <Table size="small" stickyHeader>
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell>ID</TableCell>

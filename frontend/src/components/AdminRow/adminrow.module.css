@@ -7,6 +7,12 @@
   object-fit: cover;
   border-radius: 6px;
 }
+.editBtn {
+
+}
+.removeBtn {
+  background-color: rgb(241, 200, 200);
+}
 
 /* 📱 МАГИЯ АДАПТИВА ПОД СМАРТФОНЫ */
 @media (max-width: 768px) {

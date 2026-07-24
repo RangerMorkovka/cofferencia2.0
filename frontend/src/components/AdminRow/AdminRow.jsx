@@ -75,10 +75,10 @@ const editForm = () => {
       
         
         <TableCell>
-          <button onClick ={()=>editForm(id)}>Редактировать</button>
+          <button className= {styles.editBtn} onClick ={()=>editForm(id)}>Редактировать</button>
         </TableCell>
         <TableCell>
-          <button onClick={onClickRemove}>Удалить</button></TableCell>
+          <button className= {styles.removeBtn} onClick={onClickRemove}>Удалить</button></TableCell>
       </TableRow>
     )
 }

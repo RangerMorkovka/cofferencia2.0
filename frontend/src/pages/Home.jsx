@@ -5,12 +5,17 @@ import React, {
   useCallback,
   createRef,
 } from "react";
-import styles from "../App.module.css";
+
 import { instance } from "../Axios.jsx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AddProduct } from "../pages/AddProduct/index.jsx";
-import { Header, Categories, Location, ProductCard } from "./index.jsx";
+import { AddProduct } from "./AddProduct/index.jsx";
+import {
+  Header,
+  Categories,
+  Location,
+  ProductCard,
+} from "../components/index.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,7 +27,7 @@ import { fetchCategories } from "../redux/slices/categories.js";
 import { Login } from "@mui/icons-material";
 import { fetchAuthMe } from "../redux/slices/auth.js";
 
-const MyApp = () => {
+export const Home = () => {
   return <Main />;
 };
 
@@ -106,12 +111,12 @@ function Main() {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className='wrapper'>
       <Header showLoginButton={showLoginButton} />
 
       <Location />
-      <nav className={styles.menu}>
-        <ul className={styles.ul_menu}>
+      <nav className='menu'>
+        <ul className='ul_menu'>
           {parentCategories.map((category) => (
             <Categories
               key={category.id}
@@ -122,7 +127,7 @@ function Main() {
             />
           ))}
         </ul>
-        <ul className={styles.ul_sub_menu}>
+        <ul className='ul_sub_menu'>
           {subCategories.map((subCategory) => (
             <Categories
               key={subCategory.id}
@@ -135,7 +140,8 @@ function Main() {
           ))}
         </ul>
       </nav>
-      <ul className={styles.ul_products_card}>
+      
+      <ul className='ul_products_card'>
         {filteredProducts.map((product) => {
           const variants = Array.isArray(variant)
             ? variant.filter((v) => v.product_id === product.id)
@@ -156,140 +162,6 @@ function Main() {
           );
         })}
       </ul>
-      {/* <nav className="menu" >
-
-        <ul className="ul_menu">
-          {menuData.map((item, i) => (
-            <MenuButton
-              key={item.id}
-              menuDataObj={item}
-
-              onClick={() => [handleClick(item), toggleProducts(item)]}
-
-            />
-
-
-          ))}
-        </ul>
-
-
-        {selectedItem === 1 && (
-          <ul className="ul_sub-menu">
-            {submenuData.slice(0, 3).map((item) => (
-              <SubmenuButton key={item.id} submenuDataObj={item} />
-
-            ))}
-          </ul>
-
-        )
-        }
-
-        {selectedItem === 2 && (
-          <ul className="ul_sub-menu">
-            {submenuData.slice([3]).map((item, index) => (
-              <SubmenuButton key={item.id} submenuDataObj={item} />
-            ))}
-          </ul>
-
-        )}
-
-
-      </nav>
-      <section className="products_card_container">
-        <section id="classic">
-          {selectedProducts === 1 && (
-            <ul className="ul_products_card">
-              {products.slice(0, 7).map((item) => (
-                <ProductCard key={item.id} productsObj={item} />
-              ))}
-            </ul>)}
-        </section>
-        <section id="author">
-          {selectedProducts === 1 && (
-            <ul className="ul_products_card">
-              {products.slice(7, 15).map((item) => (
-                <ProductCard key={item.id} productsObj={item} />
-              ))}
-            </ul>)}
-        </section>
-        <section id="season">
-          {selectedProducts === 1 && (
-            <ul className="ul_products_card">
-              {products.slice([15]).map((item) => (
-                <ProductCard key={item.id} productsDataObj={item} />
-              ))}
-            </ul>)}
-        </section>
-        <section id='matcha'>
-          {selectedProducts === 2 && (
-            <ul className="ul_products_card">
-              {productsDataDrinks.slice(0, 8).map((item) => (
-                <ProductCard key={item.id} productsDataObj={item} />
-              ))}
-            </ul>)}
-        </section>
-        <section id="tea">
-          {selectedProducts === 2 && (
-            <ul className="ul_products_card">
-              {productsDataDrinks.slice(8, 14).map((item) => (
-                <ProductCard key={item.id} productsDataObj={item} />
-              ))}
-            </ul>)}
-        </section>
-        <section id="hot_drinks">
-          {selectedProducts === 2 && (
-            <ul className="ul_products_card">
-              {productsDataDrinks.slice(14, 17).map((item) => (
-                <ProductCard key={item.id} productsDataObj={item} />
-              ))}
-            </ul>)}
-        </section>
-        <section id="cold_drinks">
-          {selectedProducts === 2 && (
-            <ul className="ul_products_card">
-              {productsDataDrinks.slice([17]).map((item) => (
-                <ProductCard key={item.id} productsDataObj={item} />
-              ))}
-            </ul>)}
-        </section>
-        {selectedProducts === 3 && (
-          <ul className="ul_products_card">
-            {productsDataBF.map((item) => (
-              <ProductCard key={item.id} productsDataObj={item} />
-            ))}
-          </ul>)}
-        {selectedProducts === 4 && (
-          <ul className="ul_products_card">
-            {productsDataSnacks.map((item) => (
-              <ProductCard key={item.id} productsDataObj={item} />
-            ))}
-          </ul>)}
-        {selectedProducts === 5 && (
-          <ul className="ul_products_card">
-            {productsDataSoup.map((item) => (
-              <ProductCard key={item.id} productsDataObj={item} />
-            ))}
-          </ul>)}
-        {selectedProducts === 6 && (
-          <ul className="ul_products_card">
-            {productsDataMaincourse.map((item) => (
-              <ProductCard key={item.id} productsDataObj={item} />
-            ))}
-          </ul>)}
-        {selectedProducts === 7 && (
-          <ul className="ul_products_card">
-            {productsDataSalad.map((item) => (
-              <ProductCard key={item.id} productsDataObj={item} />
-            ))}
-          </ul>)}
-        {selectedProducts === 8 && (
-          <ul className="ul_products_card">
-            {productsDataOthers.map((item) => (
-              <ProductCard key={item.id} productsDataObj={item} />
-            ))}
-          </ul>)}
-
-      </section>
 
       <footer className="footer">
         <div className="contacts">
@@ -297,17 +169,24 @@ function Main() {
           <div className="contact-items">
             <a href="https://www.instagram.com/cofferencia?igsh=MTZoemZuY3JjZHBxeQ==">
               <img
-                className="icon_img" height={'45px'} width={'45px'}
+                className="icon_img"
+                height={"45px"}
+                width={"45px"}
                 src="./icons/instagram.png"
                 alt="Инстаграм"
               />
             </a>
-            <p><a href="https://www.flaticon.com/free-icons/verified" title="verified icons">Verified icons created by Anggara - Flaticon</a></p>
+            <p>
+              <a
+                href="https://www.flaticon.com/free-icons/verified"
+                title="verified icons"
+              >
+                Verified icons created by Anggara - Flaticon
+              </a>
+            </p>
           </div>
         </div>
-      </footer>*/}
+      </footer>
     </div>
   );
 }
-
-export default MyApp;

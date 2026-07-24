@@ -187,11 +187,22 @@ export const AddProduct = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <input
+            <label className={styles.switch_container}> 
+              <div className={styles.switch}>
+              <input
+              className={styles.switch_input}
               type="checkbox"
               checked={is_available}
               onChange={(e) => setIs_available(e.target.checked)}
+              
             />
+           
+            <span className={styles.switch_slider}></span>
+            </div>
+            <span >{is_available ? 'В наличии' : 'Товар закончился'}</span>
+           
+            </label>
+           
 
             <div className={styles.variants}>
               <button
@@ -199,7 +210,7 @@ export const AddProduct = () => {
                 className={styles.addVariantBtn}
                 onClick={handleAddVariant}
               >
-                + Добавить вариант
+                + Добавить
               </button>
               <div className={styles.variantsList}>
                 {variants.map((v) => (
@@ -227,8 +238,7 @@ export const AddProduct = () => {
                       type="button"
                       className={styles.deleteVariantBtn}
                       onClick={() => handleRemoveVariant(v.id)}
-                    >
-                      ✕
+                    >X
                     </button>
                   </div>
                 ))}
@@ -239,7 +249,7 @@ export const AddProduct = () => {
           <div className={styles.imgControls}>
             <div className={styles.imgActions}>
               <button
-                className={`${styles.btn} ${styles.upload}`}
+                className={styles.uploadBtn}
                 onClick={() => inputFileRef.current.click()}
               >
                 Изображение:
@@ -253,7 +263,7 @@ export const AddProduct = () => {
 
               {img_url && (
                 <button
-                  className={`${styles.btn} ${styles.remove}`}
+                  className={styles.removeBtn}
                   variant="contained"
                   color="error"
                   onClick={onClickRemoveImage}
@@ -277,7 +287,7 @@ export const AddProduct = () => {
 
         <div className={styles.formActions}>
           <button
-            className={`${styles.btn} ${styles.save}`}
+            className={styles.saveBtn}
             onClick={onSubmit}
             size="large"
             variant="contained"
@@ -286,7 +296,7 @@ export const AddProduct = () => {
           </button>
 
           <button
-            className={`${styles.btn} ${styles.cancel}`}
+            className={styles.cancelBtn}
             size="large"
             onClick={() => navigate("/admin")}
           >

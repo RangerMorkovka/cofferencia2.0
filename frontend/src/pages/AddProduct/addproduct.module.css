@@ -7,15 +7,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
 }
 .container {
     display: flex !important;
     flex-direction: column;
-    
+    padding: 1rem; 
     
     box-sizing: border-box;
-    height: clamp(auto, 80vw, 100vh) !important;
-    width: clamp(auto, 50vw, 1200px) !important;
+    
     background-color: rgb(233, 235, 235) !important;
     box-shadow: 0px 2px 2px -1px rgba(0,0,0,0.2),
                 0px 1px 1px 0px rgba(0,0,0,0.14),
@@ -33,13 +33,14 @@
 .textControls{
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
 .imgControls{
 display: flex;
 flex-direction: column;
 gap:1rem;
 align-items: center;
-justify-content: center;
+justify-content: start;
 }
 .imgActions{
     display: flex;
@@ -47,20 +48,48 @@ justify-content: center;
     
     gap: 1rem;
 }
-.btn {
-    padding: 0.75rem 1.5rem; 
-  font-size: 1rem;
-  font-weight: 500;
-  border-radius: 6px; 
-  border: 1px solid transparent; 
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+
     
 
+.removeBtn {
+    background-color: rgb(241, 200, 200);
+  }
+.formActions {
+  display: flex;
+  gap: 1rem;
 }
+  .cancelBtn{
+    background-color: rgb(241, 200, 200);
+  }
+.variants {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.variantRow{
+  display: flex;
+  gap: 0.5rem;
 
+}
+.addVariantBtn {
+min-width: 0 !important;
+    min-height: 0 !important; 
+ 
+  padding: 0 !important;
+    width: 6rem !important;
+    height: 2rem !important;
+    border-radius: 0.5rem;
 
-
+}
+.deleteVariantBtn {
+   min-width: 0 !important;
+    min-height: 0 !important; 
+  background-color: rgb(241, 200, 200);
+  padding: 0 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 0.5rem;
+}
 
 .img {
     width: 100px;
@@ -92,6 +121,77 @@ justify-content: center;
     flex-direction: row; 
     width: 100%;
     justify-content: center;
+
   }
+  
 }
-.formActions{}
+
+/* Контейнер переключателя */
+
+.switch_container {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px; /* Отступ между переключателем и текстом */
+  cursor: pointer;
+  user-select: none; 
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  cursor: pointer;
+}
+
+/* Полностью скрываем стандартный чекбокс, но сохраняем его доступность */
+.switch_input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+/* Фон переключателя (основа) */
+.switch_slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px; /* Скругление краев */
+  transition: background-color 0.3s ease; /* Плавное изменение цвета */
+}
+
+/* Круглый ползунок (активный элемент) */
+.switch_slider::before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%; /* Идеальный круг */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Легкая тень для объема */
+  transition: transform 0.3s ease; /* Плавное движение */
+}
+
+/* Стили при состоянии CHECKED (когда чекбокс активен) */
+
+/* Изменяем цвет фона на красивый зеленый или синий */
+.switch_input:checked + .switch_slider {
+  background-color: #2ecc71; /* Можно заменить на ваш фирменный цвет */
+}
+
+/* Сдвигаем круглый ползунок вправо */
+.switch_input:checked + .switch_slider::before {
+  /* Перемещаем круг вперед на разницу ширины контейнера и самого круга */
+  transform: translateX(24px); 
+}
+
+/* Стили для фокуса (для доступности при переключении с клавиатуры табом) */
+.switch_input:focus-visible + .switch_slider {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
