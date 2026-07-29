@@ -83,7 +83,7 @@ useEffect(() => {
               <TableCell>ID</TableCell>
               <TableCell>Категория</TableCell>
               <TableCell >Имя</TableCell>
-              <TableCell>Описание</TableCell>
+              <TableCell  >Описание</TableCell>
               <TableCell >Изображение</TableCell>
               <TableCell>Доступность</TableCell>
               <TableCell sx={{minWidth:'80px'}}>Объем</TableCell>

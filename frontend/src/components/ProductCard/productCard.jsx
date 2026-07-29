@@ -21,8 +21,7 @@ export const ProductCard = ({
             className={styles.img}
            // src={img_url.startsWith('http') ? img_url : `http://localhost:5174/api${img_url}`}
             src={img_url.startsWith('http') ? img_url : `/api${img_url}`}
-            height="150"
-            width="150"
+            
             alt={name}
           />
         )}
@@ -32,15 +31,15 @@ export const ProductCard = ({
           <p className={styles.product_name}>{name}</p>
         
 
-        {/* Описание (ингредиенты) */}
-        <p className={styles.ingredients}>{description}</p>
+        {/* Описание */}
+        <p className={styles.description}>{description}</p>
 
         {/* Характеристики (объем и цена) */}
         <div className={styles.product_props}>
           {variantsArray.length > 0 && (
             <ul className={styles.volume}>
               {variantsArray.map((v) => (
-                <li key={v.id}>{v.volume} мл</li>
+                <li key={v.id}>{v.volume}</li>
               ))}
             </ul>
           )}

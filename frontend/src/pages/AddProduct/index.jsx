@@ -181,12 +181,14 @@ export const AddProduct = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <input
+            <textarea
+            name="description"
+              className={styles.inputDescription}
               type="text"
               placeholder="Описание"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-            />
+            ></textarea>
             <label className={styles.switch_container}> 
               <div className={styles.switch}>
               <input

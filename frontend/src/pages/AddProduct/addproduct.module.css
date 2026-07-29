@@ -35,6 +35,14 @@
     flex-direction: column;
     gap: 1rem;
 }
+
+
+.inputDescription{
+  height: 5rem !important;
+  word-break: break-word; /* Переносит длинные слова */
+  overflow-wrap: break-word; /* Современный стандарт для переноса */
+  white-space: pre-wrap;
+}
 .imgControls{
 display: flex;
 flex-direction: column;

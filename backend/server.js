@@ -24,10 +24,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "dist")));
 
-const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
-  ? process.env.ALLOWED_IPS_LIST.split(",").map((ip) => ip.trim())
-  : ["127.0.0.1", "::1"]; // Резервный локальный список на случай отсутствия файла
-console.log(`[БЭКЕНД] Разрешенные IP-адреса: ${ALLOWED_IPS.join(", ")}`);
+const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST;
+  
+console.log(`[БЭКЕНД] Разрешенные IP-адреса: ${ALLOWED_IPS}`);
 app.get("/api/check-access", (req, res) => {
   const clientIP = req.ip || req.socket.remoteAddress;
   const isAllowed = ALLOWED_IPS.includes(clientIP);
@@ -70,7 +69,7 @@ app.post(
   handleValidationErrors,
   UserController.login,
 );
-//app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
+app.patch('/api/auth/changepassword', checkAuth,UserController.changePassword);
 app.get("/api/auth/me", checkAuth, UserController.getMe);
 
 app.post(
@@ -105,6 +104,7 @@ app.patch(
   ProductController.update,
 );
 app.patch("/api/product_variants/:id", ProductController.update);
+
 app.get("/*path", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });

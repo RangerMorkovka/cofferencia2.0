@@ -1,5 +1,9 @@
-.img {
-    object-fit: scale-down;
+.cellDescription{
+  
+  
+   white-space: normal; 
+   word-break: normal;
+    
 }
 
 /* Стили для картинок (работают везде) */

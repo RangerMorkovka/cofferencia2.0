@@ -23,12 +23,20 @@ export const AdminHeader = () => {
             navigate ("/AddProduct")
         }}
           >Добавить<br/>блюдо</button>
+
            <button 
         className={styles.logoutBtn}
-        onClick ={ ()=> {
+        onClick ={ () => {
             navigate ("/")
         }}
           >Выход</button>
+
+           <button 
+        className={styles.addBtn}
+        onClick ={ ()=> {
+            navigate ("/ChangePasswordForm")
+        }}
+          >Сменить<br/>пароль</button>
           </div>
        
 

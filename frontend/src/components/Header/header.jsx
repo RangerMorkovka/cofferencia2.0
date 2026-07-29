@@ -7,11 +7,15 @@ export const Header = ({ showLoginButton }) => {
 
   return (
     <header className={styles.header}>
+      
+     <img className={styles.header_img} src="../../../public/images/cofferencia.jpg"/>
       <div className={styles.header_text}>
+         
         <p className={styles.cofferencia}>Cofferencia</p>
         <p className={styles.welcome}>Добро пожаловать!</p>
       </div>
       {showLoginButton && (
+        
         <button
           className={`button ${styles.button_action_login}`}
           onClick={() => {
@@ -20,6 +24,7 @@ export const Header = ({ showLoginButton }) => {
         >
           Вход
         </button>
+        
       )}
     </header>
   );

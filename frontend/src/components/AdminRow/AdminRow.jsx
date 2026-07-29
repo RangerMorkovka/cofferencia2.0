@@ -43,7 +43,7 @@ const editForm = () => {
         <TableCell className={styles.mobileCell}>{id}</TableCell>
         <TableCell>{categoryName}</TableCell>
         <TableCell>{name}</TableCell>
-        <TableCell >{description}</TableCell>
+        <TableCell className={styles.cellDescription} >{description}</TableCell>
         <TableCell >{img_url && (
           <img 
             className={styles.img}
