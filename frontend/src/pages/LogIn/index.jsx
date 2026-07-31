@@ -7,12 +7,15 @@ import styles from './Login.module.css';
 import { useForm } from 'react-hook-form'; //библиотека для работы с формами
 import { useDispatch, useSelector } from 'react-redux';// изменение и получение данных
 import {fetchAuth, selectIsAuth} from '../../redux/slices/auth';
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from "react-router-dom"; 
 
-    const Login = () => {
+import { useLocation, useNavigate } from "react-router-dom"; 
+
+   export const Login = () => {
   const isAuth = useSelector(selectIsAuth);
     const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const location = useLocation();
+   
     const {
         register, handleSubmit, formState: {errors, isValid},
     } = useForm({
@@ -23,6 +26,12 @@ import { useNavigate } from "react-router-dom";
         mode: "onChange",
 
     });
+
+   useEffect(() => {
+    if (isAuth) {
+      navigate('/admin', { replace: true });
+    }
+  }, [isAuth, navigate]);
    
     const onSubmit = async (values) => {
         const data = await dispatch(fetchAuth(values));
@@ -35,14 +44,18 @@ import { useNavigate } from "react-router-dom";
         }else{
             alert('Не удалось авторизоваться!');
         }
+        console.log(data)
     };
-    if(isAuth){
-        return (
-            
-        <Navigate to= "/Admin" />
-         
-        )
-    }
+    
+
+ 
+
+    
+
+    
+        
+    
+    
         
         
     
@@ -87,4 +100,3 @@ import { useNavigate } from "react-router-dom";
                 </Paper>
     )
 }
-export default Login;

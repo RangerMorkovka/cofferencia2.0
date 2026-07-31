@@ -34,12 +34,12 @@ export const Home = () => {
 function Main() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+const categoryRefs= useRef({});
   const [showLoginButton, setShowLoginButton] = useState(false);
   // const [showAddButton, setShowAddButton] = useState(false);
   const [activeParentId, setActiveParentId] = useState(1);
   const [activeSubCategoriesId, setActiveSubCategoriesId] = useState(null);
-
+const [activeId, setActiveId] = useState(null);
   const { items: products, status: productsStatus } = useSelector(
     (state) => state.products.products,
   );
@@ -83,7 +83,19 @@ function Main() {
     };
     checkIP();
   }, []);
+useEffect(() => {
+    // Находим активный элемент по его ID
+    const activeElement = categoryRefs.current[activeId];
 
+    if (activeElement) {
+      // Плавно скроллим контейнер, центрируя активную кнопку
+      activeElement.scrollIntoView({
+        behavior: "smooth",  // Плавная анимация
+        block: "center",    // Не двигать вертикально, если не нужно
+        inline: "center",    // Центрировать по горизонтали
+      });
+    }
+  }, [activeId]); // Срабатывает каждый раз при смене активной категории
   // Делаем запрос к базе данных ОДИН раз при загрузке страницы, а не в каждой карточке
   useEffect(() => {
     dispatch(fetchCategories());
@@ -109,7 +121,7 @@ function Main() {
   if (categoriesStatus === "error") {
     return <div>Не удается загрузить категории</div>;
   }
-
+ 
   return (
     <div className='wrapper'>
       <Header showLoginButton={showLoginButton} />
@@ -123,7 +135,11 @@ function Main() {
               name={category.name}
               isActive={activeParentId === category.id}
               parent_id={category.parent_id}
-              onClick={() => setActiveParentId(category.id)}
+              onClick={() => [setActiveParentId(category.id), setActiveId(category.id)]}
+
+              activeId={activeId}
+              setActiveId={setActiveId}
+              ref= {(el)=>{if(el){categoryRefs.current[category.id]=el}}}
             />
           ))}
         </ul>

@@ -5,7 +5,7 @@ import styles from "./adminheader.module.css";
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "../../redux/slices/auth";
 
-export const AdminHeader = () => {
+export const AdminHeader = ({handleLogout}) => {
     const navigate = useNavigate();
     const isAuth = useSelector(selectIsAuth);
      /*if(!isAuth) {
@@ -26,9 +26,7 @@ export const AdminHeader = () => {
 
            <button 
         className={styles.logoutBtn}
-        onClick ={ () => {
-            navigate ("/")
-        }}
+        onClick ={()=> handleLogout()}
           >Выход</button>
 
            <button 

@@ -11,12 +11,17 @@
 
 :root {
   interpolate-size: allow-keywords;
-  --header-height: calc(1vh + 100px);
+ 
+}
+.ul_menu::-webkit-scrollbar,
+.ul_sub_menu::-webkit-scrollbar {
+  display: none; 
 }
 
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  
 }
 
 html {
@@ -56,7 +61,7 @@ select{
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-
+ 
   text-align: end;
   align-items: center;
   width: 100dvw;
@@ -72,21 +77,7 @@ button {
   min-width: 6rem;
 }
 
-.menu-button {
-  border-radius: 1rem;
-  padding: 0 14px;
-  border: none;
-  min-height: 2.5px;
-  background-color: #ededed;
-}
 
-.menu-button:focus {
-  color: #ededed;
-  background-color: rgb(80, 181, 187, 0.9);
-  box-shadow: 0px 0px 3px 0 #34bbb9;
-
-  border-radius: 15px;
-}
 
 .img {
   object-fit: scale-down;
@@ -99,7 +90,7 @@ button {
   display: flex;
   flex-direction: column;
   
-
+scrollbar-width: none;
   top: var(--header-height);
   bottom: 0;
   left: 0;
@@ -112,23 +103,20 @@ button {
   width: 100%;
   z-index: 9999;
   background-color: #ededed;
+  scrollbar-width: none;
+  
 }
 
 .menu-item,
 .sub-menu-item {
   white-space: nowrap;
-  scroll-snap-align: center;
+  
 }
-.sub-menu-link {
-  color: #000;
 
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1rem;
-}
 
 ul {
   list-style: none;
+  
 }
 .ul_menu {
   width: 100%;
@@ -137,10 +125,10 @@ ul {
   gap: 2dvw;
   list-style: none;
   padding-left: 0;
-  scroll-snap-type: x mandatory;
+  
+  
   overflow-x: auto;
-  position: relative;
-  left: 10px;
+  padding: 10px;
 }
 
 .ul_sub_menu {

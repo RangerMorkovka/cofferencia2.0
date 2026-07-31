@@ -22,7 +22,7 @@ export const AddProduct = () => {
   const [is_available, setIs_available] = React.useState(true);
   const [category_id, setCategory_id] = React.useState("");
   const [variants, setVariants] = React.useState([
-    { id: Date.now(), volume: "", price: "" },
+    { id: Date.now(), volume: "",unit:"мл", price: "" },
   ]);
   const { items: categories, status: categoriesStatus } = useSelector(
     (state) => state.categories.categories,
@@ -41,7 +41,7 @@ export const AddProduct = () => {
   };
 
   const handleAddVariant = () => {
-    setVariants((prev) => [...prev, { id: Date.now(), volume: "", price: "" }]);
+    setVariants((prev) => [...prev, { id: Date.now(), volume: "",unit:"", price: "" }]);
   };
 
   const handleRemoveVariant = (variantId) => {
@@ -112,7 +112,7 @@ export const AddProduct = () => {
       });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (id) {
       instance
         .get(`/api/products/${id}`)
@@ -122,6 +122,7 @@ export const AddProduct = () => {
           setImg_url(data.img_url);
           setIs_available(data.is_available);
           setCategory_id(data.category_id);
+          
         })
         .catch((err) => {
           console.log(err);
@@ -136,12 +137,13 @@ export const AddProduct = () => {
           id: v.id,
           volume: v.volume ?? "",
           price: v.price ?? "",
+          unit: v.unit ?? "",
         }));
 
         setVariants(formatted);
       });
     } else {
-      setVariants([{ id: Date.now(), volume: "", price: "" }]);
+      setVariants([{ id: Date.now(), volume: "", unit:"мл", price: "" }]);
     }
   }, [id]);
 
@@ -226,6 +228,26 @@ export const AddProduct = () => {
                       }
                       className={styles.variantInput}
                     />
+                   
+              <select
+                value={v.unit}
+                onChange={(e)=> handleVariantChange(v.id, "unit", e.target.value)
+                        }
+                className={styles.categorySelect}
+                required
+              >
+                <option value="" disabled>
+                  Единица измерения
+                </option>
+
+               
+
+                    <option value="">-</option>
+                      <option value="мл">мл</option>
+                        <option value="грамм">грамм</option>
+                        <option value="шт">шт</option>
+              </select>
+            
                     <input
                       type="number"
                       inputMode="decimal"

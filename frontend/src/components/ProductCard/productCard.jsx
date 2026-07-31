@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from './productcard.module.css';
+import styles from "./productcard.module.css";
 export const ProductCard = ({
   id,
   name,
@@ -8,9 +8,8 @@ export const ProductCard = ({
   img_url,
   is_available,
   category_id,
-  variant = [], 
+  variant = [],
 }) => {
-  
   const variantsArray = Array.isArray(variant) ? variant : [];
   return (
     <li className={styles.li_products_card}>
@@ -19,17 +18,13 @@ export const ProductCard = ({
         {img_url && (
           <img
             className={styles.img}
-           // src={img_url.startsWith('http') ? img_url : `http://localhost:5174/api${img_url}`}
-            src={img_url.startsWith('http') ? img_url : `/api${img_url}`}
-            
+            // src={img_url.startsWith('http') ? img_url : `http://localhost:5174/api${img_url}`}
+            src={img_url.startsWith("http") ? img_url : `/api${img_url}`}
             alt={name}
           />
         )}
-          
-        
-        
-          <p className={styles.product_name}>{name}</p>
-        
+
+        <p className={styles.product_name}>{name}</p>
 
         {/* Описание */}
         <p className={styles.description}>{description}</p>
@@ -39,7 +34,9 @@ export const ProductCard = ({
           {variantsArray.length > 0 && (
             <ul className={styles.volume}>
               {variantsArray.map((v) => (
-                <li key={v.id}>{v.volume}</li>
+                <li key={v.id}>
+                  {v.volume && v.unit ? `${v.volume} ${v.unit}` : ""}
+                </li>
               ))}
             </ul>
           )}

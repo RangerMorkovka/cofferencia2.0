@@ -58,7 +58,7 @@ const editForm = () => {
         {variantsArray.length>0 && (
           <TableCell >
           {variantsArray.map((v) => (
-            <div key={v.id}>{ v.volume ? v.volume + ' мл' : '' }
+            <div key={v.id}>{ v.volume ? `${v.volume} ${v.unit}`: '' }
 </div>
           ))}
              

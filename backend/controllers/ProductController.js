@@ -54,19 +54,20 @@ export const create = async (req, res) => {
 
       variants.forEach((v) => {
         // Формируем структуру параметров ($1, $2, $3), ($4, $5, $6)...
-        variantRowsSql.push(`($${paramIndex}, $${paramIndex + 1}, $${paramIndex + 2})`);
+        variantRowsSql.push(`($${paramIndex}, $${paramIndex + 1}, $${paramIndex + 2}, $${paramIndex + 3})`);
         
         variantValues.push(
           productId,           // Ссылка на родительский товар (product_id)
           v.volume || null,      // Объём (строка "250 мл" или пустая)
-          Number(v.price) || 0 // Цена (принудительно число)
+          Number(v.price) || 0,          // Цена (принудительно число)
+          v.unit || 'мл'
         );
         
-        paramIndex += 3; // Сдвигаем индекс для следующей тройки параметров
+        paramIndex += 4; // Сдвигаем индекс для следующей тройки параметров
       });
 
       const variantQuery = `
-        INSERT INTO product_variants (product_id, volume, price)
+        INSERT INTO product_variants (product_id, volume, price, unit)
         VALUES ${variantRowsSql.join(', ')}
         RETURNING *;
       `;
@@ -118,12 +119,17 @@ export const update = async (req, res) => {
       let paramIndex = 1;
 
       variants.forEach((v) => {
-        variantRowsSql.push(`($${paramIndex}, $${paramIndex + 1}, $${paramIndex + 2})`);
-        variantValues.push(id, v.volume || null, Number(v.price) || 0);
-        paramIndex += 3;
+        variantRowsSql.push(`($${paramIndex}, $${paramIndex + 1}, $${paramIndex + 2}, $${paramIndex + 3})`);
+        variantValues.push(
+          id, 
+          v.volume || null, 
+          Number(v.price) || 0,
+         v.unit || 'мл'
+      );
+        paramIndex += 4;
       });
 
-      const variantQuery = `INSERT INTO product_variants (product_id, volume, price) VALUES ${variantRowsSql.join(', ')}`;
+      const variantQuery = `INSERT INTO product_variants (product_id, volume, price, unit) VALUES ${variantRowsSql.join(', ')}`;
       await db.query(variantQuery, variantValues);
     }
 

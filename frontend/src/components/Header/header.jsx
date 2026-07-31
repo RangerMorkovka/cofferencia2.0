@@ -14,7 +14,7 @@ export const Header = ({ showLoginButton }) => {
         <p className={styles.cofferencia}>Cofferencia</p>
         <p className={styles.welcome}>Добро пожаловать!</p>
       </div>
-      {showLoginButton && (
+    { /* {showLoginButton && (
         
         <button
           className={`button ${styles.button_action_login}`}
@@ -25,7 +25,7 @@ export const Header = ({ showLoginButton }) => {
           Вход
         </button>
         
-      )}
+      )}*/}
     </header>
   );
 };

@@ -12,12 +12,15 @@ import {
 } from "@mui/material";
 import { AdminRow, AdminHeader } from "../../components/index";
 import styles from './admin.module.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Navigate} from "react-router-dom";
+
 import instance from "../../Axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchProducts, fetchProductVariants } from "../../redux/slices/products";
 import { fetchCategories } from "../../redux/slices/categories";
-import { fetchAuthMe, selectIsAuth } from "../../redux/slices/auth";
+import { fetchAuth, fetchAuthMe, selectIsAuth } from "../../redux/slices/auth";
+import {logout} from '../../redux/slices/auth';
+import {Login} from "../LogIn/index.jsx";
 
 export const Admin = () => {
   const navigate = useNavigate();
@@ -33,6 +36,16 @@ export const Admin = () => {
       (state) => state.products.variants,
     );
 
+    
+
+const handleLogout = () => {
+    if (window.confirm('Вы действительно хотите выйти?')) {
+      dispatch(logout());//  очистка state.data и удаление токена
+      navigate('/'); 
+     
+    }
+
+  };
   
 
  
@@ -40,10 +53,10 @@ export const Admin = () => {
 useEffect(() => {
     const token = window.localStorage.getItem('token');
     if(!token){
-      navigate('/');
+      navigate('/login');
       return;
     }
-
+       
         dispatch(fetchAuthMe());
         dispatch(fetchCategories());
         dispatch(fetchProducts());
@@ -59,6 +72,8 @@ useEffect(() => {
   
   if (productsStatus === "loading") {
     return (
+      
+      
       <TableContainer
         component={Paper}
         className={styles.tableContainer}
@@ -71,7 +86,8 @@ useEffect(() => {
 
   return (
     <>
-      <AdminHeader />
+   
+      <AdminHeader handleLogout={handleLogout}/>
       <TableContainer
         component={Paper}
         className={styles.tableContainer}

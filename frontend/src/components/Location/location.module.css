@@ -3,6 +3,7 @@
   margin-left: auto;
   margin-right: 1rem;
   margin-top: 1rem;
+  
 }
 .location {
   display: flex;
@@ -10,3 +11,4 @@
   justify-content: center;
   align-items: center;
 }
+
