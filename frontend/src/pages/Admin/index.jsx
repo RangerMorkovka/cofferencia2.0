@@ -26,6 +26,9 @@ export const Admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
     const isAuth = useSelector(selectIsAuth);
+    const [selectedCategory, setSelectedCategory]= useState(()=> {
+      return window.localStorage.getItem('selected_category') || ""
+    });
   const { items: products, status: productsStatus } = useSelector(
     (state) => state.products.products,
   );
@@ -36,7 +39,11 @@ export const Admin = () => {
       (state) => state.products.variants,
     );
 
-    
+   const handleCategoryChange = (e)=> {
+    const value = e.target.value;
+    setSelectedCategory(value);
+    window.localStorage.setItem('selected_category', value);
+   } 
 
 const handleLogout = () => {
     if (window.confirm('Вы действительно хотите выйти?')) {
@@ -84,6 +91,10 @@ useEffect(() => {
     );
   }
 
+  const filteredProducts = Array.isArray(products) ? products.filter((product)=> {
+    if (selectedCategory==="")return true;
+    return Number(product.category_id) === Number(selectedCategory)
+  }):[];
   return (
     <>
    
@@ -97,7 +108,31 @@ useEffect(() => {
           <TableHead className={styles.tableHead}>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Категория</TableCell>
+              <TableCell><div><select
+                              value={selectedCategory}
+                              onChange={handleCategoryChange}
+                              className={styles.categorySelect}
+                              required
+                            >
+                              <option value="" >
+                                Все категории
+                              </option>
+              
+                              {Array.isArray(categories) &&
+                                categories
+              
+                                  .filter(
+                                    (cat) => Number(cat.id) !== 1 && Number(cat.id) !== 2,
+                                  )
+              
+                                  .map((cat) => (
+                                    <option key={cat.id} value={cat.id}>
+                                      {cat.name}
+                                    </option>
+                                  ))}
+                            </select>
+                          </div>
+                          </TableCell>
               <TableCell >Имя</TableCell>
               <TableCell  >Описание</TableCell>
               <TableCell >Изображение</TableCell>
@@ -109,8 +144,7 @@ useEffect(() => {
             </TableRow>
           </TableHead>
           <TableBody className={styles.tableElement}>
-            {Array.isArray(products) &&
-              products.map((product) => {
+            {filteredProducts.map((product) => {
                 const productVariants = Array.isArray(variants)
                   ? variants.filter((v) => v.product_id === product.id)
                   : [];
