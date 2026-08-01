@@ -11,6 +11,7 @@
 
 :root {
   interpolate-size: allow-keywords;
+  
  
 }
 .ul_menu::-webkit-scrollbar,
@@ -72,12 +73,28 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border-radius: 1rem;
-  min-height: 3rem;
-  min-width: 6rem;
+  min-height: 2rem;
+  min-width: 4rem;
+  border-radius: 0.5rem;
+  padding: 0 14px;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  
 }
 
-
+h1 {
+  display: block;
+  max-height: fit-content;
+  font-family: "Tangerine";
+  font-size: 4rem;
+  color: rgb(243, 246, 246) ;
+  letter-spacing: 0.4em;
+  
+}
 
 .img {
   object-fit: scale-down;

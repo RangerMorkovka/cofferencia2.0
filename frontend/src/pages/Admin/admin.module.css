@@ -1,18 +1,20 @@
 
-
 .tableContainer {
+ display: flex;
+
   padding: 20px;
-  width: auto;
-  margin: 20px;
+  min-width: 100vw;
+  min-height: auto;
   box-sizing: border-box;
-  overflow-x: visible !important;
+  
 }
 .tableHead{
-
+ 
   position: sticky;
   top: 0;
   z-index: 1;
   background-color: #ffff;
+  
 }
 
 

@@ -2,6 +2,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 import styles from "./adminheader.module.css";
+
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "../../redux/slices/auth";
 
@@ -14,8 +15,11 @@ export const AdminHeader = ({handleLogout}) => {
         return (
             <div className={styles.container}>
                 <header className={styles.header}>
+                     <img className={styles.header_img} src="../../public/images/cofferencia.jpg"/>
+                     <div className={styles.headerText}>
                     <h1 className={styles.h1}>Cofferencia</h1>
-                    <p className={styles.p}>Добро пожаловать в админ-панель!</p>
+                    <span className={styles.span}>Добро пожаловать в админ-панель!</span>
+                    </div>
             <div className={styles.btnContainer}> 
                 <button 
         className={styles.addBtn}
@@ -30,7 +34,7 @@ export const AdminHeader = ({handleLogout}) => {
           >Выход</button>
 
            <button 
-        className={styles.addBtn}
+        className={styles.changePasswordBtn}
         onClick ={ ()=> {
             navigate ("/ChangePasswordForm")
         }}

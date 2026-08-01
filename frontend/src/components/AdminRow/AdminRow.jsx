@@ -39,7 +39,7 @@ const editForm = () => {
   
   
     return (
-      <TableRow className={styles.mobileRow}>
+      <TableRow sx={{'& .MuiTableCell-root':{textAlign: "center"}}}>
         <TableCell className={styles.mobileCell}>{id}</TableCell>
         <TableCell>{categoryName}</TableCell>
         <TableCell>{name}</TableCell>

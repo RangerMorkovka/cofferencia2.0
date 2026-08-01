@@ -9,23 +9,11 @@ export const Header = ({ showLoginButton }) => {
     <header className={styles.header}>
       
      <img className={styles.header_img} src="../../../public/images/cofferencia.jpg"/>
-      <div className={styles.header_text}>
+      <div className={styles.headerText}>
          
-        <p className={styles.cofferencia}>Cofferencia</p>
-        <p className={styles.welcome}>Добро пожаловать!</p>
+        <h1>Cofferencia</h1>
+        <span>Добро пожаловать!</span>
       </div>
-    { /* {showLoginButton && (
-        
-        <button
-          className={`button ${styles.button_action_login}`}
-          onClick={() => {
-            navigate("/Login");
-          }}
-        >
-          Вход
-        </button>
-        
-      )}*/}
     </header>
   );
 };

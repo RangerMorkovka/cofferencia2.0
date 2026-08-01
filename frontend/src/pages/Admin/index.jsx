@@ -106,7 +106,7 @@ useEffect(() => {
       >
         <Table size="small" stickyHeader>
           <TableHead className={styles.tableHead}>
-            <TableRow>
+            <TableRow sx={{'& .MuiTableCell-root':{textAlign: "center"}}}>
               <TableCell>ID</TableCell>
               <TableCell><div><select
                               value={selectedCategory}
