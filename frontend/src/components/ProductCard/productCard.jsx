@@ -14,11 +14,11 @@ export const ProductCard = ({
   return (
     <li className={styles.li_products_card}>
       <div className={styles.product_card}>
-        {/* Картинка товара */}
+        
         {img_url && (
           <img
             className={styles.img}
-            // src={img_url.startsWith('http') ? img_url : `http://localhost:5174/api${img_url}`}
+            
             src={img_url.startsWith("http") ? img_url : `/api${img_url}`}
             alt={name}
           />

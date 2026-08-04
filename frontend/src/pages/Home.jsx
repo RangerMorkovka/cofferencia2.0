@@ -15,6 +15,7 @@ import {
   Categories,
   Location,
   ProductCard,
+  Footer,
 } from "../components/index.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -179,30 +180,7 @@ useEffect(() => {
         })}
       </ul>
 
-      <footer className="footer">
-        <div className="contacts">
-          <h2>Контакты</h2>
-          <div className="contact-items">
-            <a href="https://www.instagram.com/cofferencia?igsh=MTZoemZuY3JjZHBxeQ==">
-              <img
-                className="icon_img"
-                height={"45px"}
-                width={"45px"}
-                src="./icons/instagram.png"
-                alt="Инстаграм"
-              />
-            </a>
-            <p>
-              <a
-                href="https://www.flaticon.com/free-icons/verified"
-                title="verified icons"
-              >
-                Verified icons created by Anggara - Flaticon
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
+     <Footer />
     </div>
   );
 }

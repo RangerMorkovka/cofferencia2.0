@@ -6,7 +6,7 @@
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  align-items: start;
+  
   position: relative;
   height: var(--header-height);
   overflow: hidden;
@@ -18,7 +18,7 @@
 }
   .headerText{
 
-   
+  
   position: absolute;
   text-align: center;
  
