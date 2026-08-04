@@ -39,7 +39,7 @@ const editForm = () => {
   
   
     return (
-      <TableRow sx={{'& .MuiTableCell-root':{textAlign: "center"}}}>
+      <TableRow className={styles.mobileRow} sx={{'& .MuiTableCell-root':{textAlign: "center"}}}>
         <TableCell className={styles.mobileCell}>{id}</TableCell>
         <TableCell>{categoryName}</TableCell>
         <TableCell>{name}</TableCell>
@@ -47,7 +47,7 @@ const editForm = () => {
         <TableCell >{img_url && (
           <img 
             className={styles.img}
-           // src={img_url.startsWith('http') ? img_url : `http://localhost:5174/api${img_url}`}
+           
             src={img_url.startsWith('http') ? img_url : `/api${img_url}`}
             height="100"
             width="100"
@@ -73,7 +73,6 @@ const editForm = () => {
             ))}
           </TableCell>
       
-        
         <TableCell>
           <button className= {styles.editBtn} onClick ={()=>editForm(id)}>Редактировать</button>
         </TableCell>

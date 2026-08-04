@@ -20,7 +20,7 @@ export const ChangePasswordForm = () => {
     mode: 'onChange',
   });
 
-  // Следим за полем newPassword, чтобы сравнить его с подтверждением
+
   const newPasswordValue = watch('newPassword');
 
   const onSubmit = async (values) => {
@@ -33,7 +33,7 @@ export const ChangePasswordForm = () => {
       if (data.success) {
         alert('Пароль успешно обновлен!');
         reset();
-        navigate('/admin') // Очищаем форму после успешной отправки
+        navigate('/admin') 
       }
     } catch (err) {
       console.warn(err);
@@ -59,7 +59,7 @@ export const ChangePasswordForm = () => {
           {...register('oldPassword', { required: 'Введите текущий пароль' })}
         />
 
-        {/* Новый пароль */}
+      
         <TextField
           type="password"
           label="Новый пароль"
@@ -73,7 +73,7 @@ export const ChangePasswordForm = () => {
           })}
         />
 
-        {/* Подтверждение нового пароля */}
+       
         <TextField
           type="password"
           label="Подтвердите новый пароль"

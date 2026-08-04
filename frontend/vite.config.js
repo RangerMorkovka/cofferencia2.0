@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-// https://vite.dev/config/
+
 export default defineConfig({
   base: "/",
   plugins: [react()],
@@ -10,8 +10,8 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
-    host: true, // Разрешает доступ к фронтенду с телефона (трансляция в сеть)
-    port: 5173, // Порт фронтенда
+    host: true, 
+    port: 5173, 
     
     proxy: {
       // 1. Прокси для картинок (перехватывает адреса, начинающиеся с /uploads)

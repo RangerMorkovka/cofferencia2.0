@@ -1,37 +1,38 @@
 import styles from "./addproduct.module.css";
-import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import SimpleMDE from "react-simplemde-editor";
+import React, { useEffect, useState, useRef, useCallback} from "react";
+
+
 import { selectIsAuth } from "../../redux/slices/auth";
 import { fetchCategories } from "../../redux/slices/categories";
-//import 'easymde/dist/easymde.min.css';
+
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import instance from "../../Axios";
 import { fetchProductVariants } from "../../redux/slices/products";
+
+
 export const AddProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [img_url, setImg_url] = React.useState("");
-  const [is_available, setIs_available] = React.useState(true);
-  const [category_id, setCategory_id] = React.useState("");
-  const [variants, setVariants] = React.useState([
-    { id: Date.now(), volume: "",unit:"мл", price: "" },
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [img_url, setImg_url] = useState("");
+  const [is_available, setIs_available] = useState(true);
+  const [category_id, setCategory_id] = useState("");
+  const isAuth = useSelector(selectIsAuth);
+  const inputFileRef = useRef(null);
+  const isEditing = Boolean(id);
+
+  const [variants, setVariants] = useState([
+    { id: Date.now(), volume: "", unit:"мл", price: "" },
   ]);
   const { items: categories, status: categoriesStatus } = useSelector(
     (state) => state.categories.categories,
   );
 
-  const isAuth = useSelector(selectIsAuth);
-  const inputFileRef = React.useRef(null);
-  const isEditing = Boolean(id);
-
+  
   const handleVariantChange = (variantId, field, value) => {
     setVariants((prev) =>
       prev.map((item) =>
@@ -41,7 +42,7 @@ export const AddProduct = () => {
   };
 
   const handleAddVariant = () => {
-    setVariants((prev) => [...prev, { id: Date.now(), volume: "",unit:"", price: "" }]);
+    setVariants((prev) => [...prev, { id: Date.now(), volume: "", unit:"", price: "" }]);
   };
 
   const handleRemoveVariant = (variantId) => {
@@ -68,7 +69,7 @@ export const AddProduct = () => {
   const onClickRemoveImage = () => {
     setImg_url("");
   };
-  const onChange = React.useCallback((value) => {
+  const onChange = useCallback((value) => {
     setDescription(value);
   }, []);
   const onSubmit = async () => {

@@ -24,7 +24,6 @@ import {
   fetchProductVariants,
 } from "../redux/slices/products.js";
 import { fetchCategories } from "../redux/slices/categories.js";
-
 import { Login } from "@mui/icons-material";
 import { fetchAuthMe } from "../redux/slices/auth.js";
 
@@ -35,12 +34,11 @@ export const Home = () => {
 function Main() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-const categoryRefs= useRef({});
-  const [showLoginButton, setShowLoginButton] = useState(false);
-  // const [showAddButton, setShowAddButton] = useState(false);
+  const categoryRefs = useRef({});
+
   const [activeParentId, setActiveParentId] = useState(1);
   const [activeSubCategoriesId, setActiveSubCategoriesId] = useState(null);
-const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState(null);
   const { items: products, status: productsStatus } = useSelector(
     (state) => state.products.products,
   );
@@ -71,33 +69,19 @@ const [activeId, setActiveId] = useState(null);
         }
       })
     : [];
+
   useEffect(() => {
-    //функция для проверки IP при загрузке страницы
-    const checkIP = async () => {
-      try {
-        const response = await instance.get("api/check-access");
-        const data = response.data;
-        setShowLoginButton(data.showLoginButton);
-      } catch (error) {
-        console.error("Ошибка проверки IP", error);
-      }
-    };
-    checkIP();
-  }, []);
-useEffect(() => {
-    // Находим активный элемент по его ID
     const activeElement = categoryRefs.current[activeId];
 
     if (activeElement) {
-      // Плавно скроллим контейнер, центрируя активную кнопку
       activeElement.scrollIntoView({
-        behavior: "smooth",  // Плавная анимация
-        block: "center",    // Не двигать вертикально, если не нужно
-        inline: "center",    // Центрировать по горизонтали
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
       });
     }
-  }, [activeId]); // Срабатывает каждый раз при смене активной категории
-  // Делаем запрос к базе данных ОДИН раз при загрузке страницы, а не в каждой карточке
+  }, [activeId]);
+
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchProducts());
@@ -122,29 +106,35 @@ useEffect(() => {
   if (categoriesStatus === "error") {
     return <div>Не удается загрузить категории</div>;
   }
- 
+
   return (
-    <div className='wrapper'>
-      <Header showLoginButton={showLoginButton} />
+    <div className="wrapper">
+      <Header />
 
       <Location />
-      <nav className='menu'>
-        <ul className='ul_menu'>
+      <nav className="menu">
+        <ul className="ul_menu">
           {parentCategories.map((category) => (
             <Categories
               key={category.id}
               name={category.name}
               isActive={activeParentId === category.id}
               parent_id={category.parent_id}
-              onClick={() => [setActiveParentId(category.id), setActiveId(category.id)]}
-
+              onClick={() => [
+                setActiveParentId(category.id),
+                setActiveId(category.id),
+              ]}
               activeId={activeId}
               setActiveId={setActiveId}
-              ref= {(el)=>{if(el){categoryRefs.current[category.id]=el}}}
+              ref={(el) => {
+                if (el) {
+                  categoryRefs.current[category.id] = el;
+                }
+              }}
             />
           ))}
         </ul>
-        <ul className='ul_sub_menu'>
+        <ul className="ul_sub_menu">
           {subCategories.map((subCategory) => (
             <Categories
               key={subCategory.id}
@@ -157,8 +147,8 @@ useEffect(() => {
           ))}
         </ul>
       </nav>
-      
-      <ul className='ul_products_card'>
+
+      <ul className="ul_products_card">
         {filteredProducts.map((product) => {
           const variants = Array.isArray(variant)
             ? variant.filter((v) => v.product_id === product.id)
@@ -174,13 +164,12 @@ useEffect(() => {
               is_available={product.is_available}
               category_id={product.category_id}
               variant={variants}
-              // Передаем объект вариантов
             />
           );
         })}
       </ul>
 
-     <Footer />
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import styles from "./productcard.module.css";
+
+
+
 export const ProductCard = ({
   id,
   name,
@@ -26,10 +29,10 @@ export const ProductCard = ({
 
         <p className={styles.product_name}>{name}</p>
 
-        {/* Описание */}
+       
         <p className={styles.description}>{description}</p>
 
-        {/* Характеристики (объем и цена) */}
+       
         <div className={styles.product_props}>
           {variantsArray.length > 0 && (
             <ul className={styles.volume}>
@@ -48,7 +51,7 @@ export const ProductCard = ({
           </ul>
         </div>
 
-        {/* Статус наличия (опционально) */}
+       
         {!is_available && <div className="not_available">Нет в наличии</div>}
       </div>
     </li>

@@ -4,8 +4,8 @@ import {TextField} from '@mui/material';
 import {Paper} from '@mui/material';
 import {Button} from '@mui/material';
 import styles from './Login.module.css';
-import { useForm } from 'react-hook-form'; //библиотека для работы с формами
-import { useDispatch, useSelector } from 'react-redux';// изменение и получение данных
+import { useForm } from 'react-hook-form'; 
+import { useDispatch, useSelector } from 'react-redux';
 import {fetchAuth, selectIsAuth} from '../../redux/slices/auth';
 
 import { useLocation, useNavigate } from "react-router-dom"; 
@@ -48,17 +48,6 @@ import { useLocation, useNavigate } from "react-router-dom";
     };
     
 
- 
-
-    
-
-    
-        
-    
-    
-        
-        
-    
     
     return(
             <Paper classes= {{root: styles.root}}>

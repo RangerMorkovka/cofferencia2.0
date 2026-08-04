@@ -39,8 +39,8 @@
 
 .inputDescription{
   height: 5rem !important;
-  word-break: break-word; /* Переносит длинные слова */
-  overflow-wrap: break-word; /* Современный стандарт для переноса */
+  word-break: break-word; 
+  overflow-wrap: break-word; 
   white-space: pre-wrap;
 }
 .imgControls{
@@ -134,12 +134,12 @@ min-width: 0 !important;
   
 }
 
-/* Контейнер переключателя */
+
 
 .switch_container {
   display: inline-flex;
   align-items: center;
-  gap: 12px; /* Отступ между переключателем и текстом */
+  gap: 12px; 
   cursor: pointer;
   user-select: none; 
 }
@@ -151,7 +151,7 @@ min-width: 0 !important;
   cursor: pointer;
 }
 
-/* Полностью скрываем стандартный чекбокс, но сохраняем его доступность */
+
 .switch_input {
   opacity: 0;
   width: 0;
@@ -167,11 +167,11 @@ min-width: 0 !important;
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  border-radius: 34px; /* Скругление краев */
-  transition: background-color 0.3s ease; /* Плавное изменение цвета */
+  border-radius: 34px; 
+  transition: background-color 0.3s ease; 
 }
 
-/* Круглый ползунок (активный элемент) */
+
 .switch_slider::before {
   content: "";
   position: absolute;
@@ -180,25 +180,22 @@ min-width: 0 !important;
   left: 3px;
   bottom: 3px;
   background-color: white;
-  border-radius: 50%; /* Идеальный круг */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Легкая тень для объема */
-  transition: transform 0.3s ease; /* Плавное движение */
+  border-radius: 50%; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.3s ease; 
 }
 
-/* Стили при состоянии CHECKED (когда чекбокс активен) */
 
-/* Изменяем цвет фона на красивый зеленый или синий */
 .switch_input:checked + .switch_slider {
-  background-color: #2ecc71; /* Можно заменить на ваш фирменный цвет */
-}
+  background-color: #2ecc71; }
 
-/* Сдвигаем круглый ползунок вправо */
+
 .switch_input:checked + .switch_slider::before {
-  /* Перемещаем круг вперед на разницу ширины контейнера и самого круга */
+ 
   transform: translateX(24px); 
 }
 
-/* Стили для фокуса (для доступности при переключении с клавиатуры табом) */
+
 .switch_input:focus-visible + .switch_slider {
   outline: 2px solid #3498db;
   outline-offset: 2px;

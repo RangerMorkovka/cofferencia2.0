@@ -6,7 +6,7 @@ export default (req, res, next) => {
     if(token) {
         try{
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            console.log("Содержимое токена после расшифровки:", decoded);
+            
             req.userId = decoded.id;
             next();
         } catch(e){

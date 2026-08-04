@@ -8,9 +8,9 @@ import { db } from "../config/db.js";
 export const changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
-    const userId = req.userId; // Получаем из middleware авторизации
-     console.log("ID пользователя, пришедший из токена:", userId);
-    // 1. Проверяем, переданы ли оба пароля
+    const userId = req.userId; 
+     
+    
     if (!oldPassword || !newPassword) {
       return res.status(400).json({ message: 'Введите старый и новый пароли' });
     }
@@ -19,7 +19,7 @@ export const changePassword = async (req, res) => {
       return res.status(400).json({ message: 'Новый пароль должен быть не менее 6 символов' });
     }
 
-    // 2. Достаем текущего пользователя из PostgreSQL, чтобы взять хэш его старого пароля
+    
     const userResult = await db.query('SELECT password_hash FROM users WHERE id = $1;', [userId]);
     const user = userResult.rows[0];
 
@@ -27,17 +27,17 @@ export const changePassword = async (req, res) => {
       return res.status(404).json({ message: 'Пользователь не найден' });
     }
 
-    // 3. Проверяем, совпадает ли введенный старый пароль с тем, что лежит в базе
+    
     const isMatch = await bcrypt.compare(oldPassword, user.password_hash);
     if (!isMatch) {
       return res.status(400).json({ message: 'Неверный старый пароль' });
     }
 
-    // 4. Хешируем новый пароль
+    
     const salt = await bcrypt.genSalt(10);
     const newHash = await bcrypt.hash(newPassword, salt);
 
-    // 5. Обновляем хэш пароля в базе данных
+    
     await db.query('UPDATE users SET password_hash = $1 WHERE id = $2;', [newHash, userId]);
 
     res.json({ success: true, message: 'Пароль успешно изменен' });

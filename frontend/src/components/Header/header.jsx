@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 
-export const Header = ({ showLoginButton }) => {
+export const Header = () => {
  
 
   return (

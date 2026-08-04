@@ -1,19 +1,11 @@
 import { Pool } from "pg";
 
-const pool = /*process.env.DATABASE_URL
-  ? new Pool({
+const pool = new Pool({
       
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false } 
-    })
-  : */ new Pool({
-  // Этот блок продолжит работать на вашем КОМПЬЮТЕРЕ (все ваши данные остаются без изменений)
-  user: "postgres",
-  host: "localhost",
-  database: "cofferencia",
-  password: "123098qwe",
-  port: "5432",
-});
+    });
+ 
 
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
