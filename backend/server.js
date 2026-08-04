@@ -24,28 +24,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "dist")));
 
-const ALLOWED_IPS = process.env.ALLOWED_IPS_LIST
-  ? process.env.ALLOWED_IPS_LIST.split(",").map((ip) => ip.trim())
-  : ["127.0.0.1", "::1"]; // Резервный локальный список на случай отсутствия файла
-console.log(`[БЭКЕНД] Разрешенные IP-адреса: ${ALLOWED_IPS.join(", ")}`);
-app.get("/api/check-access", (req, res) => {
-  const clientIP = req.ip || req.socket.remoteAddress;
-  const isAllowed = ALLOWED_IPS.includes(clientIP);
-  console.log(`[БЭКЕНД] Клиент: ${clientIP} | Доступ: ${isAllowed}`);
-  res.json({ showLoginButton: isAllowed, debugIp: clientIP });
-});
+
 
 async function findUserByUserName(username) {
   const queryText = "SELECT * FROM users WHERE username = $1;";
   const result = await db.query(queryText, [username]);
 
-  // Если ничего не найдено, rows будет пустым массивом
+  
   if (result.rows.length === 0) {
     return null;
   }
 
   return result.rows[0];
-  console.log(result.rows[0]); // Возвращает найденную строку с данными и хэшем пароля
+   
 }
 
 const storage = multer.diskStorage({
@@ -70,7 +61,7 @@ app.post(
   handleValidationErrors,
   UserController.login,
 );
-//app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
+app.patch('/api/auth/changepassword', checkAuth,UserController.changePassword);
 app.get("/api/auth/me", checkAuth, UserController.getMe);
 
 app.post(
@@ -91,17 +82,15 @@ app.get(
   "/api/product_variants",
   ProductVariantsController.getAllProductVariants,
 );
+app.get("/api/product_variants/:id", ProductVariantsController.getOne);
 //app.get('/posts/tags', PostController.getLastTags);
-//app.get('/posts/:id', PostController.getOne);
-app.post('/api/products', ProductController.create);
-//app.delete('/posts/:id', checkAuth, PostController.remove);
-/*app.patch(
-  '/posts/:id',
-  checkAuth,
-  postCreateValidation,
-  handleValidationErrors,
-  PostController.update
-);*/
+app.get("/api/products/:id", ProductController.getOne);
+app.post("/api/products", ProductController.create);
+app.delete("/api/products/:id", checkAuth, ProductController.remove);
+app.patch( "/api/products/:id", ProductController.update);
+
+app.patch("/api/product_variants/:id", ProductController.update);
+
 app.get("/*path", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
@@ -110,5 +99,4 @@ app.listen(5174, "0.0.0.0", (err) => {
     return console.log(err);
   }
 
-  console.log("Server OK");
-});
+  });
