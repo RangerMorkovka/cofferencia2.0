@@ -1,0 +1,37 @@
+.location_container {
+  display: inline-flex;
+  justify-content: space-between;
+ margin-top: 10px;
+  width: 100%;
+  padding: 0px 10px;
+  font-size: clamp(0.6rem, calc(0.6rem + 1vw), 1rem);
+  
+}
+.phoneNumber, 
+.location{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  
+}
+.location_img,
+.phone_img{
+  width: 30px;
+  height: 30px;
+}
+@media (min-width:1200px){
+  .location_container{
+    padding:0 20px;
+  }
+  .phoneNumber:after{
+    content:"+7 (123) 456-78-90";
+    font-size: 14px;
+   border-bottom:3px double rgba(11, 155, 165, 0.8);
+  }
+  .phoneNumber:hover:after{
+    color:rgba(11, 155, 165, 0.8)
+  }
+}

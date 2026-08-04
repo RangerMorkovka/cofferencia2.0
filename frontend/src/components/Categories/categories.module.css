@@ -1,0 +1,17 @@
+.menu-item,
+.sub-menu-item {
+  white-space: nowrap;
+  scroll-snap-align: center;
+}
+
+.menu-button:focus {
+  color: black;
+  background-color: rgb(80, 181, 187, 0.4);
+}
+.sub-menu-button {
+  padding: 0 5px;
+  min-width: min-content;
+}
+.sub-menu-button:focus {
+  color: #0b9ba5;
+}
