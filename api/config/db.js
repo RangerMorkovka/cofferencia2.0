@@ -2,11 +2,7 @@ import { Pool } from "pg";
 
 const pool = new Pool({
       
-      host: 'aws-0-us-east-1.pooler.supabase.com',        // db.czbzenyqpajayvktijgr.supabase.co
-  user: `${process.env.postgres_POSTGRES_USER}.czbzenyqpajayvktijgr`,       // postgres
-  password: process.env.postgres_POSTGRES_PASSWORD, // hXx3j3bAb9IUELXg
-  database: process.env.postgres_POSTGRES_DATABASE, // postgres
-  port: 6543,                               
+      connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false } 
     });
  
