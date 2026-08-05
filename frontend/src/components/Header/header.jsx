@@ -8,7 +8,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       
-     <img className={styles.header_img} src="../../../public/images/cofferencia.jpg"/>
+     <img className={styles.header_img} src="/images/cofferencia.jpg"/>
       <div className={styles.headerText}>
          
         <h1>Cofferencia</h1>

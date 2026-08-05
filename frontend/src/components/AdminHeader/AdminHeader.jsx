@@ -15,7 +15,7 @@ export const AdminHeader = ({handleLogout}) => {
         return (
             <div className={styles.container}>
                 <header className={styles.header}>
-                     <img className={styles.header_img} src="../../public/images/cofferencia.jpg"/>
+                     <img className={styles.header_img} src="/images/cofferencia.jpg"/>
                      <div className={styles.headerText}>
                     <h1 className={styles.h1}>Cofferencia</h1>
                     <span className={styles.span}>Добро пожаловать в админ-панель!</span>
