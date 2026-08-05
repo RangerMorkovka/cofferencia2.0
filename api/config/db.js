@@ -2,7 +2,11 @@ import { Pool } from "pg";
 
 const pool = new Pool({
       
-      connectionString: process.env.postgres_POSTGRES_URL,
+       host: process.env.postgres_POSTGRES_HOST,       // db.czbzenyqpajayvktijgr.supabase.co
+  user: process.env.postgres_POSTGRES_USER,       // postgres
+  password: process.env.postgres_POSTGRES_PASSWORD, // hXx3j3bAb9IUELXg
+  database: process.env.postgres_POSTGRES_DATABASE, // postgres
+  port: 6543,                               
       ssl: { rejectUnauthorized: false } 
     });
  
