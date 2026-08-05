@@ -2,7 +2,7 @@ import { Pool } from "pg";
 
 const pool = new Pool({
       
-      connectionString: process.env.SUPABASE_URL,
+      connectionString: process.env.postgres_POSTGRES_URL,
       ssl: { rejectUnauthorized: false } 
     });
  
