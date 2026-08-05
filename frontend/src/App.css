@@ -1,12 +1,12 @@
 @font-face {
   font-family: "Tangerine";
-  src: url(./fonts/Tangerine-Bold.ttf);
+  src: url(/fonts/Tangerine-Bold.ttf);
 
   font-weight: bold;
 }
 @font-face {
   font-family: "Source Serif 4";
-  src: url(./fonts/SourceSerif4_18pt-Regular.ttf);
+  src: url(/fonts/SourceSerif4_18pt-Regular.ttf);
 }
 
 :root {
