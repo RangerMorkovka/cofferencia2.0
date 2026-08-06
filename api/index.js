@@ -1,4 +1,5 @@
 import express from "express";
+import { put } from "@vercel/blob";
 import fs from "fs";
 import multer from "multer";
 import cors from "cors";
@@ -13,6 +14,7 @@ import { ProductController } from "./controllers/index.js";
 import { CategoriesController } from "./controllers/index.js";
 import { ProductVariantsController } from "./controllers/index.js";
 import "dotenv/config";
+import { error } from "console";
 const app = express();
 
 const port = process.env.port || 5174;
@@ -35,7 +37,7 @@ async function findUserByUserName(username) {
   return result.rows[0];
 }
 
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: (_, __, cb) => {
     if (!fs.existsSync("uploads/images")) {
       fs.mkdirSync("uploads/images");
@@ -47,7 +49,10 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage });*/
+
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage});
 
 app.use("/api/uploads/images", express.static("uploads/images"));
 
@@ -65,11 +70,27 @@ app.post(
   checkAuth,
   upload.single("image"),
   (req, res) => {
-    res.json({
+    try{
+    const file =req.file;
+
+
+    if(!file){
+      return res.status(400).json({error:'Файл изображения не выбран'})
+      const blob = await put(file.originalname, file.buffer,{
+        access: "public",
+      });
+
+      return res.json({
+        img_url: blob.url
+      })
+    } }catch (err) {
+      console.error("Ошибка при загрузке в Vercel Blob:", err);
+      return res.status(500).json({ error: "Не удалось загрузить изображение" });
+    /*res.json({
       img_url: `/uploads/images/${req.file.originalname}`,
-    });
-  },
-);
+    });*/
+  }
+});
 
 app.get("/api/categories", CategoriesController.getAllCategories);
 
