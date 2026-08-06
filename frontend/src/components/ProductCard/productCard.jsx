@@ -22,7 +22,7 @@ export const ProductCard = ({
           <img
             className={styles.img}
             
-            src="https://vercel-storage.com"
+            src="https://gqufvvbqjnmoxjee.public.blob.vercel-storage.com/"
             alt={name}
           />
         )}
