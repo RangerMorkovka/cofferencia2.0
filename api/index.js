@@ -58,7 +58,7 @@ const upload = multer({storage: storage});
 app.get("/api/uploads/images/:filename", async (req, res) => {
   try {
     const { filename } = req.params;
-    const targetUrl = `https://vercel-storage.com{filename}`;
+    const targetUrl = `https://vercel-storage.com/${filename}`;
     
     const response = await fetch(targetUrl);
     
