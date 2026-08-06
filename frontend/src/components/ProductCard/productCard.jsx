@@ -22,7 +22,7 @@ export const ProductCard = ({
           <img
             className={styles.img}
             
-            src={img_url}
+            src={`/api${img_url}`}
             alt={name}
           />
         )}
