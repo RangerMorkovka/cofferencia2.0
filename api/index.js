@@ -54,7 +54,7 @@ const upload = multer({ storage });*/
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 
-app.use("/api/uploads/images", express.static("uploads/images"));
+//app.use("/api/uploads/images", express.static("uploads/images"));
 
 app.post(
   "/api/auth/login",
@@ -79,9 +79,8 @@ app.post(
     }
       const blob = await put(file.originalname, file.buffer,{
         access: "public",
+        contentType: file.mimetype,
       });
-      console.log("Мой токен в системе:", process.env.BLOB_READ_WRITE_TOKEN);
-
 
       return res.json({
         img_url: blob.url
