@@ -72,6 +72,20 @@ app.post(
   async (req, res) => {
     try{
     const file =req.file;
+ console.log("=== ЛОГ С ФРОНТЕНДА ===");
+      console.log("Имя файла (originalname):", file?.originalname);
+      console.log("Mime-тип от Multer (mimetype):", file?.mimetype);
+      console.log("Размер буфера в байтах:", file?.buffer?.length);
+      console.log("Существует ли вообще буфер?:", !!file?.buffer);
+       if (!file || !file.buffer || file.buffer.length === 0) {
+        console.error("Ошибка: Буфер пуст! Фронтенд отправил некорректный FormData.");
+        return res.status(400).json({ error: 'Файл пуст или передан неверно' });
+      }
+
+      // Проверяем первые 4 байта (магические числа), чтобы понять, реальная ли это картинка
+      // Для WebP первые байты всегда содержат "RIFF" и "WEBP"
+      const hexHeader = file.buffer.slice(0, 12).toString('ascii');
+      console.log("Заголовок содержимого буфера (проверка структуры):", hexHeader);
 
 
     if(!file){
@@ -80,8 +94,10 @@ app.post(
       const blob = await put(file.originalname, file.buffer,{
         access: "public",
         contentType: file.mimetype,
+        allowOverwrite: true,
       });
-
+ console.log("=== ОТВЕТ ОТ VERCEL ===");
+      console.log("Успешно созданный Blob объект:", blob);
       return res.json({
         img_url: blob.url
       })
