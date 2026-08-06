@@ -10,18 +10,19 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    allowedHosts: true,
     host: true,
     port: 5173,
 
     proxy: {
       // 1. Прокси для картинок (перехватывает адреса, начинающиеся с /uploads)
       "/uploads": {
-        target: "http://localhost:5174", // Куда перенаправлять (ваш бэкенд)
+        target: "https://loose-bobcats-nail.loca.lt/", // Куда перенаправлять (ваш бэкенд)
         changeOrigin: true,
       },
       // 2. Прокси для запросов к бэкенду (перехватывает адреса, начинающиеся с /api)
       "/api": {
-        target: "http://localhost:5174", // Куда перенаправлять
+        target: "https://loose-bobcats-nail.loca.lt/", // Куда перенаправлять
         changeOrigin: true,
       },
     },
