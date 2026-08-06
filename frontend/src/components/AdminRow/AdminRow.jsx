@@ -48,7 +48,7 @@ const editForm = () => {
           <img 
             className={styles.img}
            
-            src={product.image_url} alt={product.title}
+            src={img_url}
             height="100"
             width="100"
             alt={name}
