@@ -22,7 +22,7 @@ export const ProductCard = ({
           <img
             className={styles.img}
             
-            src={img_url.startsWith("http") ? img_url : `/api${img_url}`}
+            src="https://vercel-storage.com"
             alt={name}
           />
         )}
