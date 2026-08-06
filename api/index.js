@@ -80,6 +80,8 @@ app.post(
       const blob = await put(file.originalname, file.buffer,{
         access: "public",
       });
+      console.log("Мой токен в системе:", process.env.BLOB_READ_WRITE_TOKEN);
+
 
       return res.json({
         img_url: blob.url
