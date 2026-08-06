@@ -3,15 +3,16 @@ meta:
   toolchain:
     name: npm
     version: "20"
+
 build:
+  # 1. Указываем Amvera зайти внутрь папки api перед сборкой
+  dir: api
   skip: false
-  additionalCommands: null
+  # 2. Правильно собираем артефакты из подпапки api
   artifacts:
-    "*": /
+    "api/**/*": /
+
 run:
-  scriptName: null
-  scriptArguments: null
-  nodeArguments: null
   command: node index.js
   persistenceMount: /data
   containerPort: "80"
