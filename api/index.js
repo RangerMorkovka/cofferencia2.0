@@ -55,6 +55,33 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 
 //app.use("/api/uploads/images", express.static("uploads/images"));
+app.get("/api/uploads/images/:filename", async (req, res) => {
+  try {
+    const { filename } = req.params;
+    const targetUrl = `https://vercel-storage.com{filename}`;
+    
+    const response = await fetch(targetUrl);
+    
+    if (!response.ok) {
+      return res.status(404).json({ error: "Изображение не найдено в облаке Blob" });
+    }
+
+    // Явно задаем тип контента, чтобы браузер понял, что это картинка
+    const contentType = response.headers.get("Content-Type") || "image/webp";
+    res.setHeader("Content-Type", contentType);
+    
+    // Переопределяем CSP, чтобы браузер разрешил показ на вашем сайте
+    res.setHeader("Content-Security-Policy", "default-src 'self'");
+    res.setHeader("Cache-Control", "public, max-age=604800, immutable");
+
+    const arrayBuffer = await response.arrayBuffer();
+    return res.send(Buffer.from(arrayBuffer));
+
+  } catch (err) {
+    console.error("Ошибка при проксировании картинки:", err);
+    return res.status(500).json({ error: "Внутренняя ошибка прокси-сервера" });
+  }
+});
 
 app.post(
   "/api/auth/login",
