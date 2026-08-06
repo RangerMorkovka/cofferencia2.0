@@ -48,7 +48,7 @@ const editForm = () => {
           <img 
             className={styles.img}
            
-            src={img_url.startsWith('http') ? img_url : `/api${img_url}`}
+            src={product.image_url} alt={product.title}
             height="100"
             width="100"
             alt={name}
