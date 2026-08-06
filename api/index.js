@@ -69,13 +69,14 @@ app.post(
   "/api/uploads/images",
   checkAuth,
   upload.single("image"),
-  (req, res) => {
+  async (req, res) => {
     try{
     const file =req.file;
 
 
     if(!file){
       return res.status(400).json({error:'Файл изображения не выбран'})
+    }
       const blob = await put(file.originalname, file.buffer,{
         access: "public",
       });
@@ -83,7 +84,7 @@ app.post(
       return res.json({
         img_url: blob.url
       })
-    } }catch (err) {
+     }catch (err) {
       console.error("Ошибка при загрузке в Vercel Blob:", err);
       return res.status(500).json({ error: "Не удалось загрузить изображение" });
     /*res.json({
