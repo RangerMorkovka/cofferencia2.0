@@ -51,7 +51,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/uploads/images", express.static(path.join(__dirname, "uploads/images")));
 
@@ -94,9 +94,12 @@ app.delete("/api/products/:id", checkAuth, ProductController.remove);
 app.patch("/api/products/:id", ProductController.update);
 
 app.patch("/api/product_variants/:id", ProductController.update);
-app.use(express.static(path.join(__dirname, "dist")));
-app.get("/:page", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public"));
+});
+app.get("/*path", (req, res) => {
+  res.sendFile(path.join(__dirname, "public"));
 });
 app.listen(5174, "0.0.0.0", (err) => {
   if (err) {

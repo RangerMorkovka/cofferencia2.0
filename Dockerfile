@@ -21,7 +21,7 @@ RUN npm install
 # Копируем остальной код бэкенда
 COPY backend/ ./
 
-COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
+COPY --from=frontend-builder /app/frontend/dist ./public
 
 EXPOSE 80
 
