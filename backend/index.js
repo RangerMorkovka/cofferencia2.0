@@ -66,7 +66,7 @@ app.patch("/api/auth/changepassword", checkAuth, UserController.changePassword);
 app.get("/api/auth/me", checkAuth, UserController.getMe);
 
 app.post(
-  "/uploads/images",
+  "/api/uploads/images",
   checkAuth,
   upload.single("image"),
   async (req, res) => {
