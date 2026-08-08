@@ -74,7 +74,7 @@ app.post(
    
       
     res.json({
-      img_url: `/uploads/images/${req.file.originalname}`,
+      img_url: `/api/uploads/images/${req.file.originalname}`,
     });
   
 });
