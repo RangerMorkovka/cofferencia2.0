@@ -4,7 +4,7 @@ WORKDIR /app/frontend
 
 # Копируем зависимости фронтенда и устанавливаем их
 COPY frontend/package*.json ./
-RUN npm ci
+RUN npm install
 
 # Копируем код фронтенда и запускаем сборку Vite
 COPY frontend/ ./
@@ -16,7 +16,7 @@ WORKDIR /app/backend
 
 # Копируем зависимости бэкенда и устанавливаем их
 COPY backend/package*.json ./
-RUN npm ci
+RUN npm install
 
 # Копируем остальной код бэкенда
 COPY backend/ ./
