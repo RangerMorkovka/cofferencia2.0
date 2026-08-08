@@ -98,7 +98,7 @@ app.patch("/api/product_variants/:id", ProductController.update);
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public"));
 });
-app.get("/*path", (req, res) => {
+app.get("/:page", (req, res) => {
   res.sendFile(path.join(__dirname, "public"));
 });
 app.listen(5174, "0.0.0.0", (err) => {
