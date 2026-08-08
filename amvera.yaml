@@ -1,0 +1,21 @@
+meta:
+  environment: docker
+  tool: docker
+build:
+  dockerfile: Dockerfile
+run:
+  containerPort: 80
+meta:
+  environment: docker
+  toolchain:
+    name: docker
+    version: latest
+build:
+  dockerfile: Dockerfile
+  skip: false
+run:
+  persistenceMount: /data
+  image: null
+  command: null
+  args: null
+  containerPort: 80

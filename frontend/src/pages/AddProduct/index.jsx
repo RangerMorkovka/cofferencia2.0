@@ -1,0 +1,334 @@
+import styles from "./addproduct.module.css";
+import React, { useEffect, useState, useRef, useCallback} from "react";
+
+
+import { selectIsAuth } from "../../redux/slices/auth";
+import { fetchCategories } from "../../redux/slices/categories";
+
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import instance from "../../Axios";
+import { fetchProductVariants } from "../../redux/slices/products";
+
+
+export const AddProduct = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [img_url, setImg_url] = useState("");
+  const [is_available, setIs_available] = useState(true);
+  const [category_id, setCategory_id] = useState("");
+  const isAuth = useSelector(selectIsAuth);
+  const inputFileRef = useRef(null);
+  const isEditing = Boolean(id);
+
+  const [variants, setVariants] = useState([
+    { id: Date.now(), volume: "", unit:"мл", price: "" },
+  ]);
+  const { items: categories, status: categoriesStatus } = useSelector(
+    (state) => state.categories.categories,
+  );
+
+  
+  const handleVariantChange = (variantId, field, value) => {
+    setVariants((prev) =>
+      prev.map((item) =>
+        item.id === variantId ? { ...item, [field]: value } : item,
+      ),
+    );
+  };
+
+  const handleAddVariant = () => {
+    setVariants((prev) => [...prev, { id: Date.now(), volume: "", unit:"", price: "" }]);
+  };
+
+  const handleRemoveVariant = (variantId) => {
+    if (variants.length === 1) {
+      alert("У товара должен быть хотя бы один вариант объема и цены!");
+      return;
+    }
+    setVariants((prev) => prev.filter((item) => item.id !== variantId));
+  };
+  const handleChangeFile = async (event) => {
+    try {
+      const formData = new FormData();
+      const file = event.target.files[0];
+      console.log(file);
+      formData.append("image", file);
+      const { data } = await instance.post("/api/uploads/images", formData);
+      setImg_url(data.img_url);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+      alert("Ошибка при загрузке файла");
+    }
+  };
+  const onClickRemoveImage = () => {
+    setImg_url("");
+  };
+  const onChange = useCallback((value) => {
+    setDescription(value);
+  }, []);
+  const onSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const fields = {
+        name,
+        description,
+        img_url,
+        is_available,
+        category_id,
+        variants,
+      };
+      const { data } = isEditing
+        ? await instance.patch(`/api/products/${id}`, fields)
+        : await instance.post("/api/products", fields);
+
+      const productId = isEditing ? id : data.id;
+      navigate(`/admin`);
+    } catch (err) {
+      console.log(err);
+      alert("Ошибка при создании файла");
+    }
+  };
+
+  useEffect(() => {
+    instance
+      .get("/api/categories")
+      .then(
+        (data) => {
+          dispatch(fetchCategories());
+
+          console.log(categories);
+        },
+        [dispatch],
+      )
+
+      .catch((err) => {
+        console.error(err);
+        alert("Не удалось загрузить категории для списка");
+      });
+  }, []);
+
+  useEffect(() => {
+    if (id) {
+      instance
+        .get(`/api/products/${id}`)
+        .then(({ data }) => {
+          setName(data.name);
+          setDescription(data.description);
+          setImg_url(data.img_url);
+          setIs_available(data.is_available);
+          setCategory_id(data.category_id);
+          
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Ошибка при получения данных с сервера");
+        });
+    }
+  }, [id]);
+  useEffect(() => {
+    if (id) {
+      instance.get(`/api/product_variants/${id}`).then(({ data }) => {
+        const formatted = data.map((v) => ({
+          id: v.id,
+          volume: v.volume ?? "",
+          price: v.price ?? "",
+          unit: v.unit ?? "",
+        }));
+
+        setVariants(formatted);
+      });
+    } else {
+      setVariants([{ id: Date.now(), volume: "", unit:"мл", price: "" }]);
+    }
+  }, [id]);
+
+  return (
+    <div className={styles.formContainer}>
+      <div className={styles.container}>
+        <div className={styles.dataControls}>
+          <div className={styles.textControls}>
+            <div className={styles.selectWrapper}>
+              <select
+                value={category_id}
+                onChange={(e) => setCategory_id(e.target.value)}
+                className={styles.categorySelect}
+                required
+              >
+                <option value="" disabled>
+                  Выберите категорию товара
+                </option>
+
+                {Array.isArray(categories) &&
+                  categories
+
+                    .filter(
+                      (cat) => Number(cat.id) !== 1 && Number(cat.id) !== 2,
+                    )
+
+                    .map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+              </select>
+            </div>
+            <input
+              type="text"
+              placeholder="Наименование"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <textarea
+            name="description"
+              className={styles.inputDescription}
+              type="text"
+              placeholder="Описание"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+            <label className={styles.switch_container}> 
+              <div className={styles.switch}>
+              <input
+              className={styles.switch_input}
+              type="checkbox"
+              checked={is_available}
+              onChange={(e) => setIs_available(e.target.checked)}
+              
+            />
+           
+            <span className={styles.switch_slider}></span>
+            </div>
+            <span >{is_available ? 'В наличии' : 'Товар закончился'}</span>
+           
+            </label>
+           
+
+            <div className={styles.variants}>
+              <button
+                type="button"
+                className={styles.addVariantBtn}
+                onClick={handleAddVariant}
+              >
+                + Добавить
+              </button>
+              <div className={styles.variantsList}>
+                {variants.map((v) => (
+                  <div key={v.id} className={styles.variantRow}>
+                    <input
+                      type="text"
+                      placeholder="Объём, мл"
+                      value={v.volume}
+                      onChange={(e) =>
+                        handleVariantChange(v.id, "volume", e.target.value)
+                      }
+                      className={styles.variantInput}
+                    />
+                   
+              <select
+                value={v.unit}
+                onChange={(e)=> handleVariantChange(v.id, "unit", e.target.value)
+                        }
+                className={styles.categorySelect}
+                required
+              >
+                <option value="" disabled>
+                  Единица измерения
+                </option>
+
+               
+
+                    <option value="">-</option>
+                      <option value="мл">мл</option>
+                        <option value="грамм">грамм</option>
+                        <option value="шт">шт</option>
+              </select>
+            
+                    <input
+                      type="number"
+                      inputMode="decimal"
+                      placeholder="Цена (руб.)"
+                      value={v.price}
+                      onChange={(e) =>
+                        handleVariantChange(v.id, "price", e.target.value)
+                      }
+                      className={styles.variantInput}
+                    />
+                    <button
+                      type="button"
+                      className={styles.deleteVariantBtn}
+                      onClick={() => handleRemoveVariant(v.id)}
+                    >X
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.imgControls}>
+            <div className={styles.imgActions}>
+              <button
+                className={styles.uploadBtn}
+                onClick={() => inputFileRef.current.click()}
+              >
+                Изображение:
+              </button>
+              <input
+                ref={inputFileRef}
+                type="file"
+                onChange={handleChangeFile}
+                hidden
+              />
+
+              {img_url && (
+                <button
+                  className={styles.removeBtn}
+                  variant="contained"
+                  color="error"
+                  onClick={onClickRemoveImage}
+                >
+                  Удалить
+                </button>
+              )}
+            </div>
+
+            <div>
+              {img_url && (
+                <img
+                  className={styles.img}
+                  src={img_url.startsWith("http") ? img_url : `/api${img_url}`}
+                  alt="Uploaded"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.formActions}>
+          <button
+            className={styles.saveBtn}
+            onClick={onSubmit}
+            size="large"
+            variant="contained"
+          >
+            Сохранить
+          </button>
+
+          <button
+            className={styles.cancelBtn}
+            size="large"
+            onClick={() => navigate("/admin")}
+          >
+            Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
