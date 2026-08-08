@@ -21,8 +21,7 @@ RUN npm install
 # Копируем остальной код бэкенда
 COPY backend/ ./
 
-# Копируем готовую статику из Vite (из папки dist фронтенда) в папку public бэкенда
-COPY --from=frontend-builder /app/frontend/dist ./public
+COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
 EXPOSE 80
 
