@@ -9,7 +9,9 @@ lerna-debug.log*
 
 node_modules
 dist
+tests
 *.local
+playwright.config
 
 # Editor directories and files
 .vscode/*
@@ -21,3 +23,10 @@ dist
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

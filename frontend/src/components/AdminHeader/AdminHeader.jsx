@@ -34,6 +34,7 @@ export const AdminHeader = ({handleLogout}) => {
           >Выход</button>
 
            <button 
+           disabled
         className={styles.changePasswordBtn}
         onClick ={ ()=> {
             navigate ("/ChangePasswordForm")

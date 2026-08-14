@@ -1,8 +1,11 @@
 import {db} from '../config/db.js'
 
 export const getAllCategories = async (req, res) => {
+  const dbName = req.user?.dbName || "cofferencia";
+  
   try {
-    const categories = await db.query('SELECT * FROM categories');
+    
+    const categories = await db.query('SELECT * FROM categories;', [], dbName);
         res.json(categories.rows);
     
   } catch (err) {

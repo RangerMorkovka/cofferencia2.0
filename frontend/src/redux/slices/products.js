@@ -5,7 +5,7 @@ import axios, { instance } from "../../Axios";
 export const fetchProducts = createAsyncThunk(
   "/products/fetchProducts",
   async () => {
-    const { data } = await axios.get("api/products");
+    const { data } = await instance.get("api/products");
     return data;
   },
 );
@@ -13,7 +13,7 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductVariants = createAsyncThunk(
   "/product_variants/fetchProductVariants",
   async () => {
-    const { data } = await axios.get("api/product_variants");
+    const { data } = await instance.get("api/product_variants");
     return data;
   },
 );

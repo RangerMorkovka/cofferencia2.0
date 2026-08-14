@@ -1,5 +1,5 @@
 import axios from "axios";
-const currentIP = window.location.hostname;
+
 export const instance = axios.create({
  baseURL: "/",
 });

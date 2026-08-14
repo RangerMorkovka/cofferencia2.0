@@ -92,7 +92,10 @@
   transform: translateY(-2px);
   background-color: rgb(255, 242, 0, 0.3);
 
-
+}
+.changePasswordBtn:disabled {
+  cursor: not-allowed;
+  color: #010d10;
 }
 @keyframes header_img{
 0%{

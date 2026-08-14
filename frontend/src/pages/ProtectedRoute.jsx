@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 export const ProtectedRoute = ({children}) => {
     const isAuth = useSelector(selectIsAuth);
     const authStatus = useSelector((state) => state.auth.status);
-    console.log(authStatus)
+    
     const token = Boolean(window.localStorage.getItem('token'));
     const location = useLocation();
 

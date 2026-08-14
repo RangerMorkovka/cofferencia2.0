@@ -8,7 +8,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -41,10 +41,13 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0",
     "@vitejs/plugin-react": "^6.0.3",
     "eslint": "10.0.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "jest": "^27.5.1"
   }
 }

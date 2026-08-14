@@ -7,8 +7,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import pg from "pg";
 import { db } from "./config/db.js";
+
 import { loginValidation } from "./validation.js";
-import { handleValidationErrors, checkAuth } from "./utils/index.js";
+import { handleValidationErrors, checkAuth, identifyDB } from "./utils/index.js";
 import { UserController } from "./controllers/index.js";
 import { ProductController } from "./controllers/index.js";
 import { CategoriesController } from "./controllers/index.js";
@@ -20,6 +21,8 @@ const app = express();
 const port = process.env.port || 5174;
 app.use(cors());
 app.use(express.json());
+
+
 app.set("trust proxy", true);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -61,6 +64,7 @@ app.post(
   loginValidation,
   handleValidationErrors,
   UserController.login,
+  
 );
 app.patch("/api/auth/changepassword", checkAuth, UserController.changePassword);
 app.get("/api/auth/me", checkAuth, UserController.getMe);
@@ -79,21 +83,23 @@ app.post(
   
 });
 
-app.get("/api/categories", CategoriesController.getAllCategories);
+app.get("/api/categories", identifyDB, CategoriesController.getAllCategories);
 
-app.get("/api/products", ProductController.getAllProducts);
+app.get("/api/products",identifyDB, ProductController.getAllProducts);
 app.get(
   "/api/product_variants",
-  ProductVariantsController.getAllProductVariants,
+  
+  identifyDB,
+  ProductVariantsController.getAllProductVariants
 );
-app.get("/api/product_variants/:id", ProductVariantsController.getOne);
-//app.get('/posts/tags', PostController.getLastTags);
-app.get("/api/products/:id", ProductController.getOne);
-app.post("/api/products", ProductController.create);
-app.delete("/api/products/:id", checkAuth, ProductController.remove);
-app.patch("/api/products/:id", ProductController.update);
+app.get("/api/product_variants/:id", checkAuth,identifyDB, ProductVariantsController.getOne);
 
-app.patch("/api/product_variants/:id", ProductController.update);
+app.get("/api/products/:id",checkAuth,identifyDB, ProductController.getOne);
+app.post("/api/products", checkAuth,identifyDB,ProductController.create);
+app.delete("/api/products/:id", checkAuth,identifyDB, ProductController.remove);
+app.patch("/api/products/:id", checkAuth,identifyDB,ProductController.update);
+
+//app.patch("/api/product_variants/:id",checkAuth,identifyDB, ProductController.update);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public"));
