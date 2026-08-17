@@ -71,17 +71,17 @@ app.use("/uploads/images", express.static(path.join(__dirname, "uploads/images")
 
 
 app.post(
-  "/api/auth/login",
+  "/auth/login",
   loginValidation,
   handleValidationErrors,
   UserController.login,
   
 );
-app.patch("/api/auth/changepassword", checkAuth, UserController.changePassword);
-app.get("/api/auth/me", checkAuth,identifySchemaName, UserController.getMe);
+app.patch("/auth/changepassword", checkAuth, UserController.changePassword);
+app.get("/auth/me", checkAuth,identifySchemaName, UserController.getMe);
 
 app.post(
-  "/api/uploads/images",
+  "/uploads/images",
   checkAuth,
   upload.single("image"),
   async (req, res) => {
@@ -89,28 +89,28 @@ app.post(
    
       
     res.json({
-      img_url: `/api/uploads/images/${req.file.originalname}`,
+      img_url: `/uploads/images/${req.file.originalname}`,
     });
   
 });
 
-app.get("/api/categories", identifySchemaName, CategoriesController.getAllCategories);
+app.get("/categories", identifySchemaName, CategoriesController.getAllCategories);
 
-app.get("/api/products",identifySchemaName, ProductController.getAllProducts);
+app.get("/products",identifySchemaName, ProductController.getAllProducts);
 app.get(
-  "/api/product_variants",
+  "/product_variants",
   
   identifySchemaName,
   ProductVariantsController.getAllProductVariants
 );
-app.get("/api/product_variants/:id", checkAuth,identifySchemaName, ProductVariantsController.getOne);
+app.get("/product_variants/:id", checkAuth,identifySchemaName, ProductVariantsController.getOne);
 
-app.get("/api/products/:id",checkAuth,identifySchemaName, ProductController.getOne);
-app.post("/api/products", checkAuth,identifySchemaName,ProductController.create);
-app.delete("/api/products/:id", checkAuth,identifySchemaName, ProductController.remove);
-app.patch("/api/products/:id", checkAuth,identifySchemaName,ProductController.update);
+app.get("/products/:id",checkAuth,identifySchemaName, ProductController.getOne);
+app.post("/products", checkAuth,identifySchemaName,ProductController.create);
+app.delete("/products/:id", checkAuth,identifySchemaName, ProductController.remove);
+app.patch("/products/:id", checkAuth,identifySchemaName,ProductController.update);
 
-//app.patch("/api/product_variants/:id",checkAuth,identifySchemaName, ProductController.update);
+//app.patch("/product_variants/:id",checkAuth,identifySchemaName, ProductController.update);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public"));
