@@ -58,7 +58,7 @@ export const AddProduct = () => {
       const file = event.target.files[0];
       console.log(file);
       formData.append("image", file);
-      const { data } = await instance.post("/api/uploads/images", formData);
+      const { data } = await instance.post("/uploads/images", formData);
       setImg_url(data.img_url);
       console.log(data);
     } catch (err) {
