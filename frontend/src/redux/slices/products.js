@@ -1,3 +1,7 @@
+
+
+
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { instance } from "../../Axios";
 
@@ -5,7 +9,7 @@ import axios, { instance } from "../../Axios";
 export const fetchProducts = createAsyncThunk(
   "/products/fetchProducts",
   async () => {
-    const { data } = await instance.get("api/products");
+    const { data } = await instance.get("/products");
     return data;
   },
 );
@@ -13,17 +17,17 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductVariants = createAsyncThunk(
   "/product_variants/fetchProductVariants",
   async () => {
-    const { data } = await instance.get("api/product_variants");
+    const { data } = await instance.get("/product_variants");
     return data;
   },
 );
-export const fetchEditProduct = createAsyncThunk('api/products/fetchEditProduct', async (id) => {
-    const {data} = await instance.get(`api/products/${id}`);
+export const fetchEditProduct = createAsyncThunk('/products/fetchEditProduct', async (id) => {
+    const {data} = await instance.get(`/products/${id}`);
     
     return data;
 });
 export const fetchRemoveProducts = createAsyncThunk('/products/fetchRemoveProducts', async (id) => {
-    const {data} = await instance.delete(`api/products/${id}`);
+    const {data} = await instance.delete(`/products/${id}`);
     return data;
 });
 const initialState = {

@@ -5,7 +5,7 @@ import axios from "../../Axios.jsx";
 export const fetchCategories = createAsyncThunk(
   "/categories/fetchCategories",
   async () => {
-    const { data } = await axios.get("api/categories");
+    const { data } = await axios.get("/categories");
     return data;
   },
 );
