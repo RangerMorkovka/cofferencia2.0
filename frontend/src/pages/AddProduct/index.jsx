@@ -84,8 +84,8 @@ export const AddProduct = () => {
         variants,
       };
       const { data } = isEditing
-        ? await instance.patch(`/api/products/${id}`, fields)
-        : await instance.post("/api/products", fields);
+        ? await instance.patch(`/products/${id}`, fields)
+        : await instance.post("/products", fields);
 
       const productId = isEditing ? id : data.id;
       navigate(`/admin`);
@@ -97,7 +97,7 @@ export const AddProduct = () => {
 
   useEffect(() => {
     instance
-      .get("/api/categories")
+      .get("/categories")
       .then(
         (data) => {
           dispatch(fetchCategories());
@@ -116,7 +116,7 @@ export const AddProduct = () => {
   useEffect(() => {
     if (id) {
       instance
-        .get(`/api/products/${id}`)
+        .get(`/products/${id}`)
         .then(({ data }) => {
           setName(data.name);
           setDescription(data.description);
@@ -133,7 +133,7 @@ export const AddProduct = () => {
   }, [id]);
   useEffect(() => {
     if (id) {
-      instance.get(`/api/product_variants/${id}`).then(({ data }) => {
+      instance.get(`/product_variants/${id}`).then(({ data }) => {
         const formatted = data.map((v) => ({
           id: v.id,
           volume: v.volume ?? "",
