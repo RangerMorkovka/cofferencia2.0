@@ -1,17 +1,17 @@
 import { Pool } from "pg";
 
 const pool = new Pool({
-  /* connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false } 
-    });*/
+    });
 
-  host: "localhost",
+/*host: "localhost",
   port: 5432,
   user: "postgres",
   password: "123098qwe",
   database: "cofferencia",
   ssl: false,
-});
+});*/
 
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
