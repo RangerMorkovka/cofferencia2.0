@@ -67,7 +67,7 @@ const upload = multer({ storage });
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api/uploads/images", express.static(path.join(__dirname, "uploads/images")));
+app.use("/uploads/images", express.static(path.join(__dirname, "uploads/images")));
 
 
 app.post(

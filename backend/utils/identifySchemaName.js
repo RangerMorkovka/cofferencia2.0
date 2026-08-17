@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const identifySchemaName = (req, res, next) => {
   const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
-  console.log(token)
+  //console.log(token)
   if (!token || token === "null")
   {
     req.user = null;
