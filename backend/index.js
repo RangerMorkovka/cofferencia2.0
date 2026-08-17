@@ -9,13 +9,24 @@ import pg from "pg";
 import { db } from "./config/db.js";
 
 import { loginValidation } from "./validation.js";
-import { handleValidationErrors, checkAuth, identifyDB } from "./utils/index.js";
+import { handleValidationErrors, checkAuth, identifySchemaName } from "./utils/index.js";
 import { UserController } from "./controllers/index.js";
 import { ProductController } from "./controllers/index.js";
 import { CategoriesController } from "./controllers/index.js";
 import { ProductVariantsController } from "./controllers/index.js";
 import "dotenv/config";
 import { error } from "console";
+/*const originalLog = console.log;
+console.log = function (...args) {
+    const error = new Error();
+    // Вытаскиваем из стека ошибок файл и строку, которая сделала вызов
+    const stackLine = error.stack.split("\n")[2]; 
+    const cleanPath = stackLine.substring(stackLine.lastIndexOf("/") + 1, stackLine.lastIndexOf(")"));
+    
+    // Выводим сам лог и рядом место, где он написан
+    originalLog(...args, ` -> [Вызвано в: ${cleanPath}]`);
+};*/
+
 const app = express();
 
 const port = process.env.port || 5174;
@@ -67,7 +78,7 @@ app.post(
   
 );
 app.patch("/api/auth/changepassword", checkAuth, UserController.changePassword);
-app.get("/api/auth/me", checkAuth, UserController.getMe);
+app.get("/api/auth/me", checkAuth,identifySchemaName, UserController.getMe);
 
 app.post(
   "/api/uploads/images",
@@ -83,23 +94,23 @@ app.post(
   
 });
 
-app.get("/api/categories", identifyDB, CategoriesController.getAllCategories);
+app.get("/api/categories", identifySchemaName, CategoriesController.getAllCategories);
 
-app.get("/api/products",identifyDB, ProductController.getAllProducts);
+app.get("/api/products",identifySchemaName, ProductController.getAllProducts);
 app.get(
   "/api/product_variants",
   
-  identifyDB,
+  identifySchemaName,
   ProductVariantsController.getAllProductVariants
 );
-app.get("/api/product_variants/:id", checkAuth,identifyDB, ProductVariantsController.getOne);
+app.get("/api/product_variants/:id", checkAuth,identifySchemaName, ProductVariantsController.getOne);
 
-app.get("/api/products/:id",checkAuth,identifyDB, ProductController.getOne);
-app.post("/api/products", checkAuth,identifyDB,ProductController.create);
-app.delete("/api/products/:id", checkAuth,identifyDB, ProductController.remove);
-app.patch("/api/products/:id", checkAuth,identifyDB,ProductController.update);
+app.get("/api/products/:id",checkAuth,identifySchemaName, ProductController.getOne);
+app.post("/api/products", checkAuth,identifySchemaName,ProductController.create);
+app.delete("/api/products/:id", checkAuth,identifySchemaName, ProductController.remove);
+app.patch("/api/products/:id", checkAuth,identifySchemaName,ProductController.update);
 
-//app.patch("/api/product_variants/:id",checkAuth,identifyDB, ProductController.update);
+//app.patch("/api/product_variants/:id",checkAuth,identifySchemaName, ProductController.update);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public"));

@@ -1,12 +1,12 @@
-import { json } from "stream/consumers";
+
 import { db} from "../config/db.js";
 
 export const getAllProducts = async (req, res) => {
   try {
-    const dbName = req.user?.dbName || 'cofferencia';
-    (dbName);
+     const schemaName = req.user?.schemaName || 'public';
+    console.log(schemaName);
    
-    const products = await db.query(`SELECT * FROM products ORDER BY created_at DESC;`,[], dbName);
+    const products = await db.query(`SELECT * FROM products ORDER BY created_at DESC;`,[], schemaName);
     res.json(products.rows);
     
   } catch (err) {
@@ -17,7 +17,7 @@ export const getAllProducts = async (req, res) => {
   }
 };
 export const getOne = async (req, res) => {
-   const dbName = req.user?.dbName || 'cofferencia';
+    const schemaName = req.user?.schemaName || 'public';
   try {
    
     
@@ -25,7 +25,7 @@ export const getOne = async (req, res) => {
    
     const query = "SELECT * FROM products WHERE id = $1";
 
-    const result = await db.query(query, [id], dbName);
+    const result = await db.query(query, [id], schemaName);
     res.json(result.rows[0]);
   } catch (err) {
     console.error(err.message);
@@ -35,8 +35,8 @@ export const getOne = async (req, res) => {
 
 export const create = async (req, res) => {
  
-    const dbName = req.user?.dbName || 'cofferencia';
-    const client = await db.getClient(dbName);
+     const schemaName = req.user?.schemaName || 'public';
+    const client = await db.getClient(schemaName);
     try{
     const { name, description, img_url, is_available, category_id, variants } =
       req.body;
@@ -100,12 +100,14 @@ export const create = async (req, res) => {
     res.status(500).json({
       message: "Не удалось создать товар и его варианты",
     });
+  }finally{
+    client.release();
   }
 };
 
 export const update = async (req, res) => {
-  const dbName = req.user?.dbName || 'cofferencia';
-    const client = await db.getClient(dbName);
+  const schemaName = req.user?.schemaName || 'public';
+    const client = await db.getClient(schemaName);
   try {
     const { id } = req.params; 
     const { name, description, img_url, is_available, category_id, variants } =
@@ -159,12 +161,14 @@ export const update = async (req, res) => {
     await db.query("ROLLBACK");
     console.error(err);
     res.status(500).json({ message: "Не удалось обновить товар" });
+  }finally{
+    client.release();
   }
 };
 
 export const remove = async (req, res) => {
-  const dbName = req.user?.dbName || 'cofferencia';
-    const client = await db.getClient(dbName);
+  const schemaName = req.user?.schemaName || 'public';
+    const client = await db.getClient(schemaName);
   try {
     const { id } = req.params;
 
@@ -181,5 +185,7 @@ export const remove = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Не удалось удалить товар" });
+  }finally{
+    client.release();
   }
 };

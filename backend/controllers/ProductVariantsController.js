@@ -1,11 +1,11 @@
 import {db} from '../config/db.js'
 
 export const getAllProductVariants = async (req, res) => {
-  const dbName = req.user?.dbName || "cofferencia";
+  const schemaName = req.user?.schemaName || 'public';
   
   try {
     
-    const variants = await db.query('SELECT * FROM product_variants;', [], dbName);
+    const variants = await db.query('SELECT * FROM product_variants;', [], schemaName);
         res.json(variants.rows);
     
   } catch (err) {
@@ -17,12 +17,12 @@ export const getAllProductVariants = async (req, res) => {
 };
 
 export const getOne = async (req,res) => {
-  const dbName = req.user?.dbName || "cofferencia";
+  const schemaName = req.user?.schemaName || 'public';
   
   try{
     const id = parseInt(req.params.id, 10);
     
-    const variants = await db.query('SELECT * FROM product_variants WHERE product_id = $1',[id],dbName);
+    const variants = await db.query('SELECT * FROM product_variants WHERE product_id = $1',[id],schemaName);
     res.json(variants.rows);
   }
      catch (err){

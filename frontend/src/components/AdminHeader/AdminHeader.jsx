@@ -9,9 +9,9 @@ import { selectIsAuth } from "../../redux/slices/auth";
 export const AdminHeader = ({handleLogout}) => {
     const navigate = useNavigate();
     const isAuth = useSelector(selectIsAuth);
-     /*if(!isAuth) {
+     if(!isAuth) {
         return null;
-    } */
+    } 
         return (
             <div className={styles.container}>
                 <header className={styles.header}>

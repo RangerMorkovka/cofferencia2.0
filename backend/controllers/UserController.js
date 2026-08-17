@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 import { db } from "../config/db.js";
-import console from "console";
+
 
 
 
@@ -53,16 +53,11 @@ export const changePassword = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const {username, password} = req.body;
-    let dbName = 'cofferencia';
-     if(username === 'testUser') {
-      dbName = 'testdb';
-    }
-       
-      
+    
 
    
-    const queryText = "SELECT * FROM users WHERE username = $1;";
-    const result = await db.query(queryText, [req.body.username], dbName);
+    const queryText = "SELECT id, username, password_hash, schemaname FROM users WHERE username = $1;";
+    const result = await db.query(queryText, [username], 'public');
     if (result.rows.length === 0) {
       return res.status(404).json({
         message: "Пользователь не найден",
@@ -72,10 +67,10 @@ export const login = async (req, res) => {
     const user = result.rows[0];
     
     const isValidPass = await bcrypt.compare(
-      req.body.password,
+      password,
       user.password_hash,
     );
-   
+    
     if (!isValidPass) {
       return res.status(400).json({
         message: "Неверный логин или пароль",
@@ -85,7 +80,7 @@ export const login = async (req, res) => {
     const token = jwt.sign(
       {
         id: user.id,
-        dbName: dbName,  
+        schemaName: user.schemaname 
       },
       process.env.JWT_SECRET,
       {
